@@ -45,10 +45,18 @@ function AbastecimentoVeiculos() {
 
     const [modalIsOpen, setIsOpen] = useState(false);
     const [veiculos, setVeiculos] = useState(null);
+
     const [detalheVeiculo, setDetalheVeiculo] = useState(null);
+    const [resumoVeiculo, setResumoVeiculo] = useState(null);
 
     const dadosFiltro = useContext(FilterContext);
     const { filterFetchs, fetchData, url } = dadosFiltro;
+
+    const [rowsModal, setRowsModal] = useState(null);
+    const [columnsModal, setColumnsModal] = useState(null);
+
+
+    const [columns, setColumns] = useState(null);
 
 
     // Primeira renderizacao para setar o modal 
@@ -60,12 +68,67 @@ function AbastecimentoVeiculos() {
     // Fetch inicial
     useEffect(() => {
 
+        const columns = [
+            {
+                field: 'placa',
+                headerName: 'Placa',
+                width: 150,
+                renderCell: ({ row }) => (
+                    <div className={styles.containerPlaca}>
+                        <span className={styles.placa}>
+                            {row.placa}
+                        </span>
+                    </div>
+                ),
+            },
+            { field: 'filial', headerName: 'Filial', width: 150 },
+            {
+                field: 'km_percorrido', headerName: 'Distância', type: 'number', renderCell: ({ row }) => (
+                    <div>
+                        <span>
+                            {`${decimalFormatter.format(+row.km_percorrido)} km`}
+                        </span>
+                    </div>
+                ),
+            },
+            {
+                field: 'volume', headerName: 'Volume', type: 'number', renderCell: ({ row }) => (
+                    <div >
+                        <span>
+                            {`${decimalFormatter.format(+row.volume)} L`}
+                        </span>
+                    </div>
+                ),
+            },
+            {
+                field: 'media', headerName: 'Km/l', type: 'number', renderCell: ({ row }) => (
+                    <div >
+                        <span>
+                            {` ${decimalFormatter.format(+row.media)} km/l`}
+                        </span>
+                    </div>
+                ),
+            },
+            { field: 'tipo', headerName: 'Tipo', },
+            { field: 'descricao_categoria', headerName: 'Categoria', width: 150 },
+            { field: 'departamento', headerName: 'Departamento', width: 150 },
+            { field: 'media_mensal', headerName: 'Média Mensal', width: 400 },
+        ];
+
         if (url)
             (async () => {
 
                 try {
                     const json = await fetchData('veiculos', filterFetchs);
-                    setVeiculos(json);
+
+
+                    if (json) {
+                        setVeiculos(json);
+                        setColumns(columns)
+                    }
+
+
+
                 } catch (error) {
                     console.log(error);
                 }
@@ -81,8 +144,15 @@ function AbastecimentoVeiculos() {
 
                 const json = await fetchData('detalheVeiculo', { ...dadosFiltro, placa, filial });
 
-                if (json) {
-                    setDetalheVeiculo(json);
+                console.log(json);
+
+
+                if ('detalhado' in json && 'resumido' in json) {
+                    setDetalheVeiculo(json.detalhado);
+                    setResumoVeiculo(json.resumido)
+
+                    setColumnsModal(columnsDetalhes);
+                    setRowsModal(json.detalhado);
                 }
 
 
@@ -204,29 +274,21 @@ function AbastecimentoVeiculos() {
         },
     ];
 
-    const columns = [
+    const columnsResumo = [
         {
-            field: 'placa',
-            headerName: 'Placa',
-            width: 150,
-            renderCell: ({ row }) => (
-                <div className={styles.containerPlaca}>
-                    <span className={styles.placa}>
-                        {row.placa}
-                    </span>
-                </div>
-            ),
+            field: 'id',
+            headerName: 'Mês',
         },
-        { field: 'filial', headerName: 'Filial', width: 150 },
         {
-            field: 'km_percorrido', headerName: 'Distância', type: 'number', renderCell: ({ row }) => (
-                <div>
+            field: 'km_rodado', headerName: 'Km Percorrido', type: 'number', width: 150, renderCell: ({ row }) => (
+                <div >
                     <span>
-                        {`${decimalFormatter.format(+row.km_percorrido)} km`}
+                        {`${decimalFormatter.format(+row.km_rodado)} km`}
                     </span>
                 </div>
             ),
         },
+
         {
             field: 'volume', headerName: 'Volume', type: 'number', renderCell: ({ row }) => (
                 <div >
@@ -237,25 +299,24 @@ function AbastecimentoVeiculos() {
             ),
         },
         {
-            field: 'media', headerName: 'Km/l', type: 'number', renderCell: ({ row }) => (
+            field: 'media', headerName: 'Media', type: 'number', renderCell: ({ row }) => (
                 <div >
                     <span>
-                        {` ${decimalFormatter.format(+row.media)} km/l`}
+                        {`${decimalFormatter.format(row.media)} km/l`}
                     </span>
                 </div>
             ),
         },
-        { field: 'tipo', headerName: 'Tipo', },
-        { field: 'descricao_categoria', headerName: 'Categoria', width: 150 },
-        { field: 'departamento', headerName: 'Departamento', width: 150 },
     ];
+
+
 
     return (
         <section className='animeLeft'>
 
             <ThemeProvider theme={theme}>
                 <div className={styles.containerGrid} style={{ height: '80vh' }} >
-                    {veiculos ? <Table
+                    {veiculos && columns ? <Table
                         rows={veiculos}
                         columns={columns}
                         onRowClick={openModal}
@@ -273,12 +334,30 @@ function AbastecimentoVeiculos() {
                         style={customStyles}
                         contentLabel="Lista de Abastecimentos"
                     >
-                        {detalheVeiculo ? <ThemeProvider theme={theme}>
-                            <div style={{ height: '95%', width: '100%' }}>
 
+                        {rowsModal ? <ThemeProvider theme={theme}>
+                            <div style={{ height: '90%', width: '100%' }}>
+
+                                {/* <div className={styles.containerBtnModal}>
+                                    <button className='button' onClick={() => {
+                                        if (detalheVeiculo) {
+                                            setRowsModal(detalheVeiculo);
+                                            setColumnsModal(columnsDetalhes);
+                                        }
+
+                                    }}>Detalhado</button>
+                                    <button className='button'
+                                        onClick={() => {
+                                            if (resumoVeiculo) {
+                                                setRowsModal(resumoVeiculo);
+                                                setColumnsModal(columnsResumo);
+                                            }
+                                        }}
+                                    >Resumido</button>
+                                </div> */}
                                 <Table
-                                    rows={detalheVeiculo}
-                                    columns={columnsDetalhes}
+                                    rows={rowsModal}
+                                    columns={columnsModal}
                                 />
 
                                 <div className="closeButton">

@@ -24,6 +24,7 @@ dist-ssr
 *.sw?
 
 #php
+*.php
 apiAbastecimento.php
 apiAbastecimento - Copia.php
 apiTelemetria.php

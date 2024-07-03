@@ -12,11 +12,11 @@ function App() {
   return (
     // basename='bi'
 
-    <BrowserRouter  >
+    <BrowserRouter   >
       <Routes>
-        <Route path="/*" element={<Home />} />
-        <Route path="/abastecimento/*" element={<Abastecimento />} />
-        <Route path="/telemetria/*" element={<Telemetria />} />
+        {/* <Route path="/*" element={<Home />} /> */}
+        <Route path="/*" element={<Abastecimento />} />
+        {/* <Route path="/telemetria/*" element={<Telemetria />} /> */}
       </Routes>
 
     </BrowserRouter>

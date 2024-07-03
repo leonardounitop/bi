@@ -111,10 +111,8 @@ const Filter = () => {
         combustivel, url
     ]);
 
-    if (isHidden) return null;
-
     return (
-        <section>
+        <section style={{ display: isHidden ? 'none' : 'block' }}>
             <div className='listaFiltro animeLeft'>
                 <form className='filters' style={{ fontFamily: 'sans-serif', fontSize: 14 }}>
                     <div className='containerFilters'>

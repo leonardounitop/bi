@@ -47,10 +47,14 @@ const FilterVault = ({ children }) => {
     // setar o URL da API
     useEffect(() => {
 
+        // Arrumar essa parte que seta a URL
+
         if (pathname.includes('abastecimento')) {
             setUrl(API_URL_ABASTECIMENTO);
         } else if (pathname.includes('telemetria')) {
             setUrl(API_URL_TELEMETRIA);
+        } else {
+            setUrl(API_URL_ABASTECIMENTO);
         }
 
 

@@ -3,7 +3,7 @@ import { ResponsiveBar } from '@nivo/bar';
 import { currency } from '../Helper/NumberFormatter';
 
 
-function Bar({ data, dataType, layout, keys, indexBy, groupMode, margin, telemetria = false }) {
+function Bar({ data, dataType, layout, keys, indexBy, groupMode, margin, telemetria = false, handleClick }) {
 
 
     const corTelemetria = ['#4ade80', '#fde047', '#60a5fa', '#f87171', '#a1a1aa'];
@@ -13,7 +13,6 @@ function Bar({ data, dataType, layout, keys, indexBy, groupMode, margin, telemet
             layout={layout ? layout : 'vertical'}
             padding={0.1}
             valueFormat={(value) => {
-
 
                 if (dataType === 'currency') {
                     return `${currency.format(value)}`;
@@ -27,6 +26,8 @@ function Bar({ data, dataType, layout, keys, indexBy, groupMode, margin, telemet
             }}
             activeOuterRadiusOffset={8}
             keys={keys}
+            onClick={(e) => { console.log(e) }}
+
             indexBy={indexBy}
             groupMode={groupMode ? groupMode : 'stacked'}
             margin={margin}

@@ -32,6 +32,7 @@ function AbastecimentoGeral() {
 
     // Fetch inicial de todos os dados com os filtros.
     useEffect(() => {
+
         if (url) {
             async function fetchDados() {
                 try {
@@ -51,6 +52,9 @@ function AbastecimentoGeral() {
                         fetchData('consumoFilial', filterFetchs),
                         fetchData('modeloVeiculo', filterFetchs),
                     ])
+
+
+
 
 
                     if (jsonCards)

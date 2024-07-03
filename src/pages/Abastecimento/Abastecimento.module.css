@@ -135,7 +135,14 @@
     display: flex;
     justify-content: center;
 }
+ 
 
+.containerBtnModal {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 8px;
+}
 
 
 @media (max-width:700px) {
