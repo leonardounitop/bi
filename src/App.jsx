@@ -12,7 +12,7 @@ function App() {
   return (
     // basename='bi'
 
-    <BrowserRouter   >
+    <BrowserRouter  >
       <Routes>
         {/* <Route path="/*" element={<Home />} /> */}
         <Route path="/*" element={<Abastecimento />} />

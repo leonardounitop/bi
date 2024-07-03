@@ -2,13 +2,19 @@ import { ResponsiveLine } from '@nivo/line';
 
 
 //   { data /* see data tab */ }
-const Line = ({ data, dataType }) => (
-    <ResponsiveLine
+const Line = ({ data, dataType, legend }) => {
+
+    const allYValues = data.flatMap(series => series.data.map(d => d.y >= 0 && !isNaN(d.y) ? d.y : 0));
+    const minValue = Math.min(...allYValues);
+
+
+    return <ResponsiveLine
         data={data}
-        margin={{ top: 50, right: 110, bottom: 50, left: 50 }}
+        margin={{ top: 50, right: 120, bottom: 50, left: 50 }}
         xScale={{ type: 'point' }}
         yScale={{
             type: 'linear',
+            min: minValue
         }}
         axisTop={null}
         axisRight={null}
@@ -17,7 +23,7 @@ const Line = ({ data, dataType }) => (
             tickSize: 5,
             tickPadding: 5,
             tickRotation: 0,
-            legend: 'Produtividade Mensal',
+            legend: legend,
             legendOffset: 36,
             legendPosition: 'middle'
         }}
@@ -29,7 +35,7 @@ const Line = ({ data, dataType }) => (
             legendOffset: -40,
             legendPosition: 'middle'
         }}
-        colors={{ scheme: 'set3' }}
+        colors={{ scheme: 'dark2' }}
         pointSize={8}
         pointBorderColor={{ from: 'serieColor' }}
         pointLabelYOffset={-12}
@@ -54,11 +60,11 @@ const Line = ({ data, dataType }) => (
                 direction: 'column',
                 justify: false,
                 translateX: 100,
-                translateY: 0,
+                translateY: 10,
                 itemsSpacing: 0,
                 itemDirection: 'left-to-right',
                 itemWidth: 80,
-                itemHeight: 20,
+                itemHeight: 14,
                 itemOpacity: 0.75,
                 symbolSize: 12,
                 symbolShape: 'circle',
@@ -76,6 +82,6 @@ const Line = ({ data, dataType }) => (
         ]}
 
     />
-)
+}
 
 export default Line;

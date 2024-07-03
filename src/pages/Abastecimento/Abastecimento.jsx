@@ -5,10 +5,7 @@ import { GoGraph } from "react-icons/go";
 import { RiTruckLine } from "react-icons/ri";
 import { FaRegBuilding } from "react-icons/fa";
 import { PiRanking } from "react-icons/pi";
-
 import { MdOutlineWaterDrop } from "react-icons/md";
-
-
 
 import { Route, Routes, NavLink } from 'react-router-dom';
 import AbastecimentoGeral from './AbastecimentoGeral';

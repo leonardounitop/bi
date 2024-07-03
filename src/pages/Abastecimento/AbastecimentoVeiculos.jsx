@@ -315,7 +315,7 @@ function AbastecimentoVeiculos() {
         <section className='animeLeft'>
 
             <ThemeProvider theme={theme}>
-                <div className={styles.containerGrid} style={{ height: '80vh' }} >
+                <div className={styles.containerGrid} style={{ height: '75vh' }} >
                     {veiculos && columns ? <Table
                         rows={veiculos}
                         columns={columns}

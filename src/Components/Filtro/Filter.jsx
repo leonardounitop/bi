@@ -36,8 +36,12 @@ const Filter = () => {
 
     // Função Genérica para setar o que ira no fetch.
     const handleFilterChange = (setFunction) => (selectedOptions) => {
+
+
         const values = selectedOptions.map(option => option.value);
         setFunction(values.length > 0 ? values : null);
+
+
     };
 
     // Desabilitar o filtro em páginas que não precisam
@@ -110,6 +114,7 @@ const Filter = () => {
         categoria,
         combustivel, url
     ]);
+
 
     return (
         <section style={{ display: isHidden ? 'none' : 'block' }}>

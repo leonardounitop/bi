@@ -7,7 +7,7 @@ const FiltroIndividual = ({ options, isLoading, isDisabled, onChange, placeholde
             <Select
                 isDisabled={isDisabled || !options}
                 isMulti
-                options={options}
+                options={options ? options : []}
                 menuPlacement='top'
                 onChange={onChange}
                 placeholder={placeholder}

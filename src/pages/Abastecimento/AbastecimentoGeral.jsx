@@ -15,6 +15,26 @@ import PieContentLoader from '../../Helper/Skeleton/PieContentLoader';
 
 import LoadingSpinner from '../../Helper/LoadingSpinner';
 import { FilterContext } from '../../Context/FilterVault';
+import Line from '../../Graph/Line';
+
+const transformData = (data) => {
+    const groupedData = {};
+
+    data.forEach(item => {
+        const { equipamento, media, mes } = item;
+
+        if (!groupedData[equipamento]) {
+            groupedData[equipamento] = [];
+        }
+
+        groupedData[equipamento].push({ x: mes, y: isNaN(parseFloat(media)) ? null : parseFloat(media) });
+    });
+
+    return Object.keys(groupedData).map(equipamento => ({
+        id: equipamento,
+        data: groupedData[equipamento]
+    }));
+};
 
 
 function AbastecimentoGeral() {
@@ -25,6 +45,7 @@ function AbastecimentoGeral() {
     const [consumoTipo, setConsumoTipo] = useState(null);
     const [consumoMensal, setConsumoMensal] = useState(null);
     const [modelo, setModelo] = useState(null);
+    const [lineFilialData, setLineFilialData] = useState(null);
 
     const dadosFiltro = useContext(FilterContext);
     const { url, fetchData, filterFetchs } = dadosFiltro;
@@ -43,7 +64,8 @@ function AbastecimentoGeral() {
                         jsonValorCategoria,
                         jsonConsumoPorTipo,
                         jsonConsumoFilial,
-                        jsonModeloVeiculo
+                        jsonModeloVeiculo,
+                        jsonConsumoMedioFilial
                     ] = await Promise.all([
                         fetchData('cards', filterFetchs),
                         fetchData('consumoMensal', filterFetchs),
@@ -51,10 +73,11 @@ function AbastecimentoGeral() {
                         fetchData('consumoPorTipo', filterFetchs),
                         fetchData('consumoFilial', filterFetchs),
                         fetchData('modeloVeiculo', filterFetchs),
+                        fetchData('obterMediaMensalFiliais', filterFetchs)
                     ])
 
 
-
+                    const lineData = transformData(jsonConsumoMedioFilial);
 
 
                     if (jsonCards)
@@ -69,6 +92,9 @@ function AbastecimentoGeral() {
                         setConsumoFilial(jsonConsumoFilial);
                     if (jsonModeloVeiculo)
                         setModelo(jsonModeloVeiculo);
+
+                    if (lineData)
+                        setLineFilialData(lineData);
 
 
                 } catch (error) {
@@ -121,7 +147,7 @@ function AbastecimentoGeral() {
                     </div>
                 </div>
 
-                <div className={styles.containerChart}>
+                <div className={styles.containerTripleChart}>
                     <div className={styles.graphBox}>
                         {consumoMensal ? <Bar
                             data={consumoMensal}
@@ -141,9 +167,6 @@ function AbastecimentoGeral() {
                             margin={{ top: 10, right: 10, bottom: 0, left: 220 }}
                         /> : <BarContentLoader />}
                     </div>
-                </div>
-
-                <div className={styles.doubleChart}>
                     <div className={styles.graphBox}>
                         {consumoTipo ? <Bar
                             data={consumoTipo}
@@ -154,6 +177,19 @@ function AbastecimentoGeral() {
                             margin={{ top: 10, right: 10, bottom: 0, left: 100 }}
                         /> : <BarContentLoader />}
                     </div>
+                </div>
+
+                <div className={styles.doubleChart}>
+
+                    <div className={styles.graphBoxGrid}>
+                        {lineFilialData ?
+                            <Line
+                                data={lineFilialData}
+                                legend='Consumo médio mensal por Categoria'
+                                dataType='volume'
+                            /> : <BarContentLoader />}
+                    </div>
+
                     <div className={styles.graphBoxGrid}>
                         {consumoFilial ?
                             <Pie
