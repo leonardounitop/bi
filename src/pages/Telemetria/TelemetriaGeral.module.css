@@ -16,6 +16,7 @@
 }
 
 
+
 .cardPerc {
     padding: 1rem 0.5rem;
     border-radius: 4px 0 0 4px;
@@ -39,12 +40,25 @@
 .containerBar {
     margin-top: 2rem;
     margin-bottom: 1rem;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 1fr 2fr 1fr;
 }
+
+.containerGauge {
+    background-color: #fff;
+    padding-bottom: 1rem;
+    border-radius: 4px;
+    display: grid;
+    align-items: center;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+}
+
 
 .doubleContainer {
     display: grid;
     gap: 1rem;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns:2fr 1fr 1fr;
 }
 
 

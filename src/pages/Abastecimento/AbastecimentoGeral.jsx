@@ -79,6 +79,8 @@ function AbastecimentoGeral() {
 
                     const lineData = transformData(jsonConsumoMedioFilial);
 
+                    console.log(lineData);
+
 
                     if (jsonCards)
                         setCardInfo(jsonCards);

@@ -52,9 +52,6 @@ function Abastecimento() {
                             <NavLink to='' end>Visão Geral <GoGraph /> </NavLink>
                         </li>
                         <li>
-                            <NavLink to='veiculos'>Veículos <RiTruckLine /> </NavLink>
-                        </li>
-                        <li>
                             <NavLink to='ranking'>Ranking <PiRanking /> </NavLink>
                         </li>
                         <li>
@@ -62,6 +59,9 @@ function Abastecimento() {
                         </li>
                         <li>
                             <NavLink to='media'>Tráfego <FaRegBuilding /> </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to='veiculos'>Veículos <RiTruckLine /> </NavLink>
                         </li>
                     </ul>
                     <a href="https://carvalima.unitopconsultoria.com.br/integracao" target='_blank' className='linkExterno'>UNITOP X ATS</a>

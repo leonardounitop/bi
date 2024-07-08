@@ -13,6 +13,7 @@ const FiltroIndividual = ({ options, isLoading, isDisabled, onChange, placeholde
                 placeholder={placeholder}
                 className='select'
                 isLoading={isLoading}
+                closeMenuOnSelect={false}
             />
         </div>
     );

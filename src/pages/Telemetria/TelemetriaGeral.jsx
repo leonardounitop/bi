@@ -4,6 +4,8 @@ import Bar from '../../Graph/Bar';
 import Pie from '../../Graph/Pie'
 import BarContentLoader from '../../Helper/Skeleton/BarContentLoader'
 import PieContentLoader from '../../Helper/Skeleton/PieContentLoader'
+import GaugeComponent from 'react-gauge-component';
+
 
 import { PiEngineBold } from "react-icons/pi";
 import { AiOutlineThunderbolt } from "react-icons/ai";
@@ -13,6 +15,7 @@ import { FaRegClock } from "react-icons/fa6";
 
 import LoadingSpinner from '../../Helper/LoadingSpinner'
 import { FilterContext } from '../../Context/FilterVault';
+import Line from '../../Graph/Line';
 
 const backgroundColor = {
     verde: 'linear-gradient(to right, #34d399, #064e3b)',
@@ -30,6 +33,29 @@ function TelemetriaGeral() {
     const [consumoMarcas, setConsumoMarcas] = useState(null);
 
 
+    const [percent, setPercent] = useState(0); // Exemplo de valor de porcentagem (entre 0 e 1)
+
+    const transformData = (data) => {
+        const groupedData = {};
+
+        data.forEach(item => {
+            const { faixa, valor, mes } = item;
+
+            if (!groupedData[faixa]) {
+                groupedData[faixa] = [];
+            }
+
+            groupedData[faixa].push({ x: mes, y: isNaN(parseFloat(valor)) ? null : parseFloat(valor) });
+        });
+
+        return Object.keys(groupedData).map(faixa => ({
+            id: faixa,
+            data: groupedData[faixa]
+        }));
+    };
+
+
+
     const dadosFilter = useContext(FilterContext)
     const { fetchData, filterFetchs, url } = dadosFilter;
 
@@ -43,13 +69,18 @@ function TelemetriaGeral() {
                         jsonPercentualMensal,
                         jsonDadosMarca,
                         jsonDadosConsumoMarca,
+                        jsonProdutividadeGeral
                     ] = await Promise.all([
                         fetchData('obterDadosCards', filterFetchs),
                         fetchData('obterPercentualMensal', filterFetchs),
                         fetchData('obterDadosMarca', filterFetchs),
                         fetchData('obterDadosConsumoMarca', filterFetchs),
+                        fetchData('obterDadosProdutividade', filterFetchs)
                     ]);
 
+
+
+                    console.log(jsonPercentualMensal);
 
 
                     if (jsonCards)
@@ -60,6 +91,8 @@ function TelemetriaGeral() {
                         setPercMarcas(jsonDadosMarca);
                     if (jsonDadosConsumoMarca)
                         setConsumoMarcas(jsonDadosConsumoMarca);
+                    if (jsonProdutividadeGeral)
+                        setPercent(jsonProdutividadeGeral.produtividade);
                 })();
 
             } catch (error) {
@@ -124,7 +157,46 @@ function TelemetriaGeral() {
 
             <div className={styles.containerBar}>
 
+                <div className={styles.containerGauge}>
+                    <GaugeComponent
+                        value={percent}
+                        type="semicircle"
+                        labels={{
+                            tickLabels: {
+                                type: "inner",
+                                ticks: [
+                                    { value: 20 },
+                                    { value: 40 },
+                                    { value: 60 },
+                                    { value: 80 },
+                                    { value: 100 }
+                                ]
+                            },
+                            valueLabel: {
+                                // matchColorWithArc: true,
+                                style: { fontSize: "40px", fill: "#555" }
+                            }
+                        }}
+                        arc={{
+                            gradient: true,
+                            colorArray: ['#EA4228', '#EA4228', '#fde047', '#fde047', '#16a34a'],
+                            subArcs: [{ limit: 20 }, { limit: 45 }, { limit: 55 }, { limit: 78 }, {}],
+                            padding: 0.01,
+                            width: 0.1,
+                        }}
+                        pointer={{
+                            color: '#ddd',
+                            width: 15,
+                            type: 'arrow',
+                        }}
+
+                        maxValue={100}
+                        minValue={0}
+                    />
+                </div>
+
                 <div className={styles.box}  >
+
                     {percMensal ? <Bar
                         data={percMensal}
                         keys={[
@@ -133,20 +205,16 @@ function TelemetriaGeral() {
                             'Marcha Lenta',
                             'Alta Rotação',
                         ]}
-                        indexBy="mes"
                         groupMode="grouped"
-                        telemetria={true}
+                        layout="vertical"
+                        indexBy="mes"
                         dataType='percent'
-                        margin={{ bottom: 25, left: 30 }}
+                        telemetria={true}
+                        margin={{ bottom: 25, left: 65, right: 20, top: 10 }}
 
                     /> : <BarContentLoader />}
 
                 </div>
-
-
-
-            </div>
-            <div className={styles.doubleContainer}>
 
                 <div className={styles.box}>
 
@@ -158,7 +226,7 @@ function TelemetriaGeral() {
                             'Marcha Lenta',
                             'Alta Rotação',
                         ]}
-                        groupMode="stacked"
+                        groupMode="grouped"
                         layout="horizontal"
                         indexBy="Marca"
                         dataType='percent'
@@ -170,6 +238,47 @@ function TelemetriaGeral() {
 
 
                 </div>
+
+
+
+
+
+            </div>
+            <div className={styles.doubleContainer}>
+
+
+                <div className={styles.box}>
+
+                    {percMarcas ? <Bar
+                        data={percMarcas}
+                        keys={[
+                            'Faixa Econômica',
+                            'Faixa Potência',
+                            'Marcha Lenta',
+                            'Alta Rotação',
+                        ]}
+                        groupMode="grouped"
+                        layout="horizontal"
+                        indexBy="Marca"
+                        dataType='percent'
+                        telemetria={true}
+                        margin={{ bottom: 25, left: 65, right: 20, top: 10 }}
+
+                    /> : <BarContentLoader />}
+
+
+
+                </div>
+
+
+                <div className={styles.box} >
+                    {consumoMarcas ? <Pie
+                        data={consumoMarcas}
+                        dataType='volume'
+                    /> : <PieContentLoader />}
+
+                </div>
+
 
                 <div className={styles.box} >
                     {consumoMarcas ? <Pie

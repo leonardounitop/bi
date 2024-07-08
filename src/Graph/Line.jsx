@@ -2,10 +2,15 @@ import { ResponsiveLine } from '@nivo/line';
 
 
 //   { data /* see data tab */ }
-const Line = ({ data, dataType, legend }) => {
+const Line = ({ data, dataType, legend, telemetria }) => {
 
     const allYValues = data.flatMap(series => series.data.map(d => d.y >= 0 && !isNaN(d.y) ? d.y : 0));
     const minValue = Math.min(...allYValues);
+
+    // const corTelemetria = ['#4ade80', '#fde047', '#60a5fa', '#f87171', '#a1a1aa'];
+
+    // Nao está claro como as cores estao se relacionando com as linhas, coloquei nessa ordem e deu certo. Verificar no futuro.
+    const corTelemetria = ['#4ade80', '#60a5fa', '#fde047', '#f87171', '#a1a1aa'];
 
 
     return <ResponsiveLine
@@ -35,7 +40,7 @@ const Line = ({ data, dataType, legend }) => {
             legendOffset: -40,
             legendPosition: 'middle'
         }}
-        colors={{ scheme: 'dark2' }}
+        colors={telemetria ? corTelemetria : { scheme: 'dark2' }}
         pointSize={8}
         pointBorderColor={{ from: 'serieColor' }}
         pointLabelYOffset={-12}
@@ -64,7 +69,7 @@ const Line = ({ data, dataType, legend }) => {
                 itemsSpacing: 0,
                 itemDirection: 'left-to-right',
                 itemWidth: 80,
-                itemHeight: 14,
+                itemHeight: 16,
                 itemOpacity: 0.75,
                 symbolSize: 12,
                 symbolShape: 'circle',

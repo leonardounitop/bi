@@ -10,7 +10,6 @@ import Line from '../../Graph/Line';
 
 function TelemetriaProdutividade() {
 
-    const [percent, setPercent] = useState(0); // Exemplo de valor de porcentagem (entre 0 e 1)
     const [prodMensal, setProdMensal] = useState(null);
     const { fetchData, url } = useContext(FilterContext);
 
@@ -42,43 +41,8 @@ function TelemetriaProdutividade() {
         <section className='animeLeft'>
 
             <div className={styles.container}>
-                <div className={styles.containerGauge}>
-                    <GaugeComponent
-                        value={percent}
-                        type="semicircle"
-                        labels={{
-                            tickLabels: {
-                                type: "inner",
-                                ticks: [
-                                    { value: 20 },
-                                    { value: 40 },
-                                    { value: 60 },
-                                    { value: 80 },
-                                    { value: 100 }
-                                ]
-                            },
-                            valueLabel: {
-                                // matchColorWithArc: true,
-                                style: { fontSize: "35px", fill: "#555" }
-                            }
-                        }}
-                        arc={{
-                            gradient: true,
-                            colorArray: ['#EA4228', '#EA4228', '#fde047', '#fde047', '#16a34a'],
-                            subArcs: [{ limit: 20 }, { limit: 45 }, { limit: 55 }, { limit: 78 }, {}],
-                            padding: 0.01,
-                            width: 0.1,
-                        }}
-                        pointer={{
-                            color: '#ddd',
-                            width: 15,
-                            type: 'arrow',
-                        }}
 
-                        maxValue={100}
-                        minValue={0}
-                    />
-                </div>
+
 
                 <div className={styles.paradoLigado}>
                     <h2>Custo Parado Ligado <IoMdStopwatch /></h2>
@@ -101,6 +65,8 @@ function TelemetriaProdutividade() {
                         </li>
                     </ul>
                 </div>
+
+
 
 
             </div>

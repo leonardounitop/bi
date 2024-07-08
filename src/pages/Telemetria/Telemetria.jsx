@@ -7,8 +7,10 @@ import TelemetriaProdutividade from './TelemetriaProdutividade';
 
 import { GoGraph } from 'react-icons/go';
 import { MdOutlinePercent } from "react-icons/md";
-import { PiRanking } from "react-icons/pi";
+import { PiRanking, PiSecurityCamera } from "react-icons/pi";
+
 import { IoIosGitCompare } from "react-icons/io";
+
 
 
 function Telemetria() {
@@ -29,6 +31,9 @@ function Telemetria() {
                     </li>
                     <li>
                         <NavLink to='comparativo'>Comparativo <IoIosGitCompare /> </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to='multas'>Multas <PiSecurityCamera /> </NavLink>
                     </li>
                 </ul>
             </nav>
