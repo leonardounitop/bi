@@ -12,10 +12,25 @@ const Line = ({ data, dataType, legend, telemetria }) => {
     // Nao está claro como as cores estao se relacionando com as linhas, coloquei nessa ordem e deu certo. Verificar no futuro.
     const corTelemetria = ['#4ade80', '#60a5fa', '#fde047', '#f87171', '#a1a1aa'];
 
+    const theme = {
+        axis: {
+            ticks: {
+                text: {
+                    fontSize: 11, // Alterar tamanho da fonte dos rótulos dos eixos
+                },
+            },
+        },
+        labels: {
+            text: {
+                fontSize: 11, // Alterar tamanho da fonte dos rótulos das barras
+            },
+        },
+    };
+
 
     return <ResponsiveLine
         data={data}
-        margin={{ top: 50, right: 120, bottom: 50, left: 50 }}
+        margin={{ top: 50, right: 120, bottom: 50, left: 55 }}
         xScale={{ type: 'point' }}
         yScale={{
             type: 'linear',
@@ -49,7 +64,7 @@ const Line = ({ data, dataType, legend, telemetria }) => {
             if (dataType === 'currency') {
                 return `${currency.format(value)}`;
             } else if (dataType === 'volume') {
-                return `${value} km/l`;
+                return `${value}km/l`;
             } else if (dataType === 'percent') {
                 return `${value}%`
             }
@@ -85,6 +100,8 @@ const Line = ({ data, dataType, legend, telemetria }) => {
                 ]
             }
         ]}
+
+        theme={theme}
 
     />
 }

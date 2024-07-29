@@ -1,21 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react'
-
-import Table from '../../Components/Table/Table';
-import TableContentLoader from '../../Helper/Skeleton/TableContentLoader';
-import Modal from 'react-modal';
-
-
 import { ptBR } from '@mui/x-data-grid/locales';
 import { currency, decimalFormatter } from '../../Helper/NumberFormatter'
 import { format } from 'date-fns';
 import { ptBR as br } from 'date-fns/locale';
 import { FilterContext } from '../../Context/FilterVault';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
-
-
-
 import styles from './Abastecimento.module.css';
+
+
+import Modal from 'react-modal';
+import Table from '../../Components/Table/Table';
+import TableContentLoader from '../../Helper/Skeleton/TableContentLoader';
+
 
 
 
@@ -45,9 +41,6 @@ function AbastecimentoVeiculos() {
 
     const [modalIsOpen, setIsOpen] = useState(false);
     const [veiculos, setVeiculos] = useState(null);
-
-    const [detalheVeiculo, setDetalheVeiculo] = useState(null);
-    const [resumoVeiculo, setResumoVeiculo] = useState(null);
 
     const dadosFiltro = useContext(FilterContext);
     const { filterFetchs, fetchData, url } = dadosFiltro;
@@ -140,17 +133,10 @@ function AbastecimentoVeiculos() {
         if (placa && filial) {
             try {
 
-                setDetalheVeiculo(null);
 
                 const json = await fetchData('detalheVeiculo', { ...dadosFiltro, placa, filial });
 
-                console.log(json);
-
-
                 if ('detalhado' in json && 'resumido' in json) {
-                    setDetalheVeiculo(json.detalhado);
-                    setResumoVeiculo(json.resumido)
-
                     setColumnsModal(columnsDetalhes);
                     setRowsModal(json.detalhado);
                 }
@@ -274,40 +260,6 @@ function AbastecimentoVeiculos() {
         },
     ];
 
-    const columnsResumo = [
-        {
-            field: 'id',
-            headerName: 'Mês',
-        },
-        {
-            field: 'km_rodado', headerName: 'Km Percorrido', type: 'number', width: 150, renderCell: ({ row }) => (
-                <div >
-                    <span>
-                        {`${decimalFormatter.format(+row.km_rodado)} km`}
-                    </span>
-                </div>
-            ),
-        },
-
-        {
-            field: 'volume', headerName: 'Volume', type: 'number', renderCell: ({ row }) => (
-                <div >
-                    <span>
-                        {`${decimalFormatter.format(+row.volume)} L`}
-                    </span>
-                </div>
-            ),
-        },
-        {
-            field: 'media', headerName: 'Media', type: 'number', renderCell: ({ row }) => (
-                <div >
-                    <span>
-                        {`${decimalFormatter.format(row.media)} km/l`}
-                    </span>
-                </div>
-            ),
-        },
-    ];
 
 
 
@@ -316,11 +268,14 @@ function AbastecimentoVeiculos() {
 
             <ThemeProvider theme={theme}>
                 <div className={styles.containerGrid} style={{ height: '75vh' }} >
-                    {veiculos && columns ? <Table
-                        rows={veiculos}
-                        columns={columns}
-                        onRowClick={openModal}
-                    /> : <TableContentLoader />}
+                    {veiculos && columns ?
+                        <Table
+                            rows={veiculos}
+                            columns={columns}
+                            onRowClick={openModal}
+                        />
+
+                        : <TableContentLoader />}
                 </div>
             </ThemeProvider>
 
@@ -337,29 +292,10 @@ function AbastecimentoVeiculos() {
 
                         {rowsModal ? <ThemeProvider theme={theme}>
                             <div style={{ height: '90%', width: '100%' }}>
-
-                                {/* <div className={styles.containerBtnModal}>
-                                    <button className='button' onClick={() => {
-                                        if (detalheVeiculo) {
-                                            setRowsModal(detalheVeiculo);
-                                            setColumnsModal(columnsDetalhes);
-                                        }
-
-                                    }}>Detalhado</button>
-                                    <button className='button'
-                                        onClick={() => {
-                                            if (resumoVeiculo) {
-                                                setRowsModal(resumoVeiculo);
-                                                setColumnsModal(columnsResumo);
-                                            }
-                                        }}
-                                    >Resumido</button>
-                                </div> */}
                                 <Table
                                     rows={rowsModal}
                                     columns={columnsModal}
                                 />
-
                                 <div className="closeButton">
                                     <button onClick={closeModal}>Fechar</button>
                                 </div>

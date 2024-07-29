@@ -37,10 +37,8 @@ const Filter = () => {
     // Função Genérica para setar o que ira no fetch.
     const handleFilterChange = (setFunction) => (selectedOptions) => {
 
-
         const values = selectedOptions.map(option => option.value);
         setFunction(values.length > 0 ? values : null);
-
 
     };
 
@@ -82,6 +80,8 @@ const Filter = () => {
                         fetchData('obterCategoria', { anos, placas, meses, filial, tipoVeiculo, departamento, base, combustivel }),
                         fetchData('obterCombustivel', { anos, placas, meses, filial, tipoVeiculo, departamento, base, categoria })
                     ]);
+
+
 
 
 

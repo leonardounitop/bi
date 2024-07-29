@@ -31,7 +31,8 @@ function TelemetriaGeral() {
     const [percMensal, setPercMensal] = useState(null);
     const [percMarcas, setPercMarcas] = useState(null);
     const [consumoMarcas, setConsumoMarcas] = useState(null);
-
+    const [totalInfracoes, setTotalInfracoes] = useState(null);
+    const [consumoMensalMarca, setConsumoMensalMarca] = useState(null);
 
     const [percent, setPercent] = useState(0); // Exemplo de valor de porcentagem (entre 0 e 1)
 
@@ -39,24 +40,22 @@ function TelemetriaGeral() {
         const groupedData = {};
 
         data.forEach(item => {
-            const { faixa, valor, mes } = item;
+            const { id, value, mes } = item;
 
-            if (!groupedData[faixa]) {
-                groupedData[faixa] = [];
+            if (!groupedData[id]) {
+                groupedData[id] = [];
             }
 
-            groupedData[faixa].push({ x: mes, y: isNaN(parseFloat(valor)) ? null : parseFloat(valor) });
+            groupedData[id].push({ x: mes, y: isNaN(parseFloat(value)) ? null : parseFloat(value) });
         });
 
-        return Object.keys(groupedData).map(faixa => ({
-            id: faixa,
-            data: groupedData[faixa]
+        return Object.keys(groupedData).map(id => ({
+            id: id,
+            data: groupedData[id]
         }));
     };
 
-
-
-    const dadosFilter = useContext(FilterContext)
+    const dadosFilter = useContext(FilterContext);
     const { fetchData, filterFetchs, url } = dadosFilter;
 
     // Fetch dos graficos 
@@ -69,18 +68,19 @@ function TelemetriaGeral() {
                         jsonPercentualMensal,
                         jsonDadosMarca,
                         jsonDadosConsumoMarca,
-                        jsonProdutividadeGeral
+                        jsonProdutividadeGeral,
+                        jsonTotalInfracoes,
+                        jsonConsumoMedioMensal
                     ] = await Promise.all([
                         fetchData('obterDadosCards', filterFetchs),
                         fetchData('obterPercentualMensal', filterFetchs),
                         fetchData('obterDadosMarca', filterFetchs),
                         fetchData('obterDadosConsumoMarca', filterFetchs),
-                        fetchData('obterDadosProdutividade', filterFetchs)
+                        fetchData('obterDadosProdutividade', filterFetchs),
+                        fetchData('obterTotalInfracoes', filterFetchs),
+                        fetchData('obterConsumoMedioMensal', filterFetchs),
                     ]);
 
-
-
-                    console.log(jsonPercentualMensal);
 
 
                     if (jsonCards)
@@ -93,6 +93,14 @@ function TelemetriaGeral() {
                         setConsumoMarcas(jsonDadosConsumoMarca);
                     if (jsonProdutividadeGeral)
                         setPercent(jsonProdutividadeGeral.produtividade);
+                    if (jsonTotalInfracoes)
+                        setTotalInfracoes(jsonTotalInfracoes);
+                    if (jsonConsumoMedioMensal) {
+                        const consumoMensalTransformado = transformData(jsonConsumoMedioMensal);
+                        setConsumoMensalMarca(consumoMensalTransformado);
+                    }
+
+
                 })();
 
             } catch (error) {
@@ -108,34 +116,41 @@ function TelemetriaGeral() {
 
             <div className={styles.containerFaixas}>
                 <div className={styles.containerCard}>
-                    <div className={styles.cardPerc}>
+                    <div className={styles.cardPerc}
+                        style={{ color: dadosCards && dadosCards.per_verde ? dadosCards.per_verde >= 50 ? '#166534' : '#b91c1c' : '#333' }}>
                         {dadosCards ? `${dadosCards.per_verde}%` : <LoadingSpinner width={24} height={24} />}
                     </div>
-                    <div className={styles.cardTime} style={{ background: backgroundColor.verde }}>
+                    <div className={styles.cardTime}
+                        style={{ background: backgroundColor.verde }}   >
                         <span>{dadosCards ? dadosCards.faixa_verde : '00:00:00'}</span><PiEngineBold />
                     </div>
                 </div>
                 <div className={styles.containerCard}>
-                    <div className={styles.cardPerc}>
+                    <div className={styles.cardPerc}
+                        style={{ color: dadosCards && dadosCards.per_amarela ? dadosCards.per_amarela < 20 ? '#166534' : '#b91c1c' : '#333' }} >
                         {dadosCards ? `${dadosCards.per_amarela}%` : <LoadingSpinner width={24} height={24} />}
                     </div>
-                    <div className={styles.cardTime} style={{ background: backgroundColor.amarelo }}>
+                    <div className={styles.cardTime}
+                        style={{ background: backgroundColor.amarelo }}   >
                         <span>{dadosCards ? dadosCards.faixa_amarela : '00:00:00'}</span> <AiOutlineThunderbolt />
 
                     </div>
                 </div>
                 <div className={styles.containerCard}>
-                    <div className={styles.cardPerc}>
+                    <div className={styles.cardPerc}
+                        style={{ color: dadosCards && dadosCards.per_vermelha ? dadosCards.per_vermelha < 1 ? '#166534' : '#b91c1c' : '#333' }} >
                         {dadosCards ? `${dadosCards.per_vermelha}%` : <LoadingSpinner width={24} height={24} />}
 
                     </div>
-                    <div className={styles.cardTime} style={{ background: backgroundColor.vermelho }}>
+                    <div className={styles.cardTime}
+                        style={{ background: backgroundColor.vermelho }}>
                         <span>{dadosCards ? dadosCards.faixa_vermelha : '00:00:00'}</span> <FiAlertTriangle />
 
                     </div>
                 </div>
                 <div className={styles.containerCard}>
-                    <div className={styles.cardPerc}>
+                    <div className={styles.cardPerc}
+                        style={{ color: dadosCards && dadosCards.per_azul ? dadosCards.per_azul < 10 ? '#166534' : '#b91c1c' : '#333' }}>
                         {dadosCards ? `${dadosCards.per_azul}%` : <LoadingSpinner width={24} height={24} />}
 
                     </div>
@@ -249,21 +264,9 @@ function TelemetriaGeral() {
 
                 <div className={styles.box}>
 
-                    {percMarcas ? <Bar
-                        data={percMarcas}
-                        keys={[
-                            'Faixa Econômica',
-                            'Faixa Potência',
-                            'Marcha Lenta',
-                            'Alta Rotação',
-                        ]}
-                        groupMode="grouped"
-                        layout="horizontal"
-                        indexBy="Marca"
-                        dataType='percent'
-                        telemetria={true}
-                        margin={{ bottom: 25, left: 65, right: 20, top: 10 }}
-
+                    {percMarcas ? <Line
+                        data={consumoMensalMarca}
+                        dataType='volume'
                     /> : <BarContentLoader />}
 
 
@@ -281,9 +284,9 @@ function TelemetriaGeral() {
 
 
                 <div className={styles.box} >
-                    {consumoMarcas ? <Pie
-                        data={consumoMarcas}
-                        dataType='volume'
+                    {totalInfracoes ? <Pie
+                        data={totalInfracoes}
+                        padAngle={15}
                     /> : <PieContentLoader />}
 
                 </div>

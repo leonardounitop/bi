@@ -1,5 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
+
 import Table from '../../Components/Table/Table';
+
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import styles from './Abastecimento.module.css';
 import { ptBR } from '@mui/x-data-grid/locales';
@@ -168,19 +170,24 @@ function AbastecimentoMediaFilial() {
 
             <ThemeProvider theme={theme}>
                 <div className={styles.containerGrid} style={{ height: '400px' }} >
-                    {dataMatriz ? <Table
-                        rows={dataMatriz}
-                        columns={columns}
-                    /> : <TableContentLoader />}
+                    {dataMatriz ?
+                        <Table
+                            rows={dataMatriz}
+                            columns={columns}
+                        />
+
+                        : <TableContentLoader />}
                 </div>
             </ThemeProvider>
             <h2 className={styles.subtitle} style={{ marginTop: 10 }}>Média Diesel - Tráfego - {'CGR'}</h2>
             <ThemeProvider theme={theme}>
                 <div className={styles.containerGrid} style={{ height: '400px' }} >
-                    {dataCGR ? <Table
-                        rows={dataCGR}
-                        columns={columns}
-                    /> : <TableContentLoader />}
+                    {dataCGR ?
+                        <Table
+                            rows={dataCGR}
+                            columns={columns}
+                        />
+                        : <TableContentLoader />}
                 </div>
             </ThemeProvider>
 

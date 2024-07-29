@@ -14,26 +14,26 @@ function TelemetriaProdutividade() {
     const { fetchData, url } = useContext(FilterContext);
 
 
-    useEffect(() => {
-        if (url)
+    // useEffect(() => {
+    //     if (url)
 
-            try {
-                (async () => {
-                    const jsonProdutividadeGeral = await fetchData('obterDadosProdutividade');
-                    const jsonProdutividadeMensal = await fetchData('obterProdutividadeMensal');
+    //         try {
+    //             (async () => {
+    //                 const jsonProdutividadeGeral = await fetchData('obterDadosProdutividade');
+    //                 const jsonProdutividadeMensal = await fetchData('obterProdutividadeMensal');
 
-                    if (jsonProdutividadeGeral)
-                        setPercent(jsonProdutividadeGeral.produtividade);
-                    if (jsonProdutividadeMensal)
-                        setProdMensal(jsonProdutividadeMensal);
-                })();
+    //                 if (jsonProdutividadeGeral)
+    //                     setPercent(jsonProdutividadeGeral.produtividade);
+    //                 if (jsonProdutividadeMensal)
+    //                     setProdMensal(jsonProdutividadeMensal);
+    //             })();
 
-            } catch (error) {
-                console.log(error);
-            }
+    //         } catch (error) {
+    //             console.log(error);
+    //         }
 
 
-    }, [url])
+    // }, [url])
 
 
 

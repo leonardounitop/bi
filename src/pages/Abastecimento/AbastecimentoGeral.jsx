@@ -6,16 +6,19 @@ import { GiPayMoney } from "react-icons/gi";
 import { TbDropletDollar } from "react-icons/tb";
 
 import styles from './Abastecimento.module.css';
+
+// Graficos
 import Pie from '../../Graph/Pie';
 import Bar from '../../Graph/Bar';
+import Line from '../../Graph/Line';
+
 
 import { currency, decimalFormatter } from '../../Helper/NumberFormatter';
 import BarContentLoader from '../../Helper/Skeleton/BarContentLoader';
 import PieContentLoader from '../../Helper/Skeleton/PieContentLoader';
-
 import LoadingSpinner from '../../Helper/LoadingSpinner';
+
 import { FilterContext } from '../../Context/FilterVault';
-import Line from '../../Graph/Line';
 
 const transformData = (data) => {
     const groupedData = {};
@@ -79,7 +82,6 @@ function AbastecimentoGeral() {
 
                     const lineData = transformData(jsonConsumoMedioFilial);
 
-                    console.log(lineData);
 
 
                     if (jsonCards)
@@ -151,33 +153,42 @@ function AbastecimentoGeral() {
 
                 <div className={styles.containerTripleChart}>
                     <div className={styles.graphBox}>
-                        {consumoMensal ? <Bar
-                            data={consumoMensal}
-                            dataType='volume'
-                            keys={['media_mensal']}
-                            indexBy="mes"
-                            margin={{ top: 10, right: 10, bottom: 30, left: 30 }}
-                        /> : <BarContentLoader />}
+                        {consumoMensal ?
+                            <Bar
+                                data={consumoMensal}
+                                dataType='volume'
+                                keys={['media_mensal']}
+                                indexBy="mes"
+                                margin={{ top: 10, right: 10, bottom: 30, left: 30 }}
+                            />
+                            : <BarContentLoader />}
                     </div>
                     <div className={styles.graphBox}>
-                        {valorCategoria ? <Bar
-                            data={valorCategoria}
-                            layout='horizontal'
-                            dataType='currency'
-                            keys={['valor']}
-                            indexBy="categoria"
-                            margin={{ top: 10, right: 10, bottom: 0, left: 220 }}
-                        /> : <BarContentLoader />}
+                        {valorCategoria ?
+                            <Bar
+                                data={valorCategoria}
+                                layout='horizontal'
+                                dataType='currency'
+                                keys={['valor']}
+                                indexBy="categoria"
+                                customBarWidth={true}
+                                labelSkipWidth={80}
+                                margin={{ top: 10, right: 10, bottom: 0, left: 270 }}
+                            />
+                            : <BarContentLoader />}
                     </div>
                     <div className={styles.graphBox}>
-                        {consumoTipo ? <Bar
-                            data={consumoTipo}
-                            layout='horizontal'
-                            dataType='volume'
-                            keys={['media']}
-                            indexBy="descricao"
-                            margin={{ top: 10, right: 10, bottom: 0, left: 100 }}
-                        /> : <BarContentLoader />}
+                        {consumoTipo ?
+                            <Bar
+                                data={consumoTipo}
+                                layout='horizontal'
+                                dataType='volume'
+                                keys={['media']}
+                                customBarWidth={true}
+                                indexBy="descricao"
+                                margin={{ top: 10, right: 10, bottom: 0, left: 180 }}
+                            />
+                            : <BarContentLoader />}
                     </div>
                 </div>
 
@@ -189,7 +200,8 @@ function AbastecimentoGeral() {
                                 data={lineFilialData}
                                 legend='Consumo médio mensal por Categoria'
                                 dataType='volume'
-                            /> : <BarContentLoader />}
+                            />
+                            : <BarContentLoader />}
                     </div>
 
                     <div className={styles.graphBoxGrid}>
@@ -204,12 +216,14 @@ function AbastecimentoGeral() {
                             <PieContentLoader />}
                     </div>
                     <div className={styles.graphBoxGrid}>
-                        {modelo ? <Pie
-                            data={modelo}
-                            padAngle={15}
-                            innerRadius={0.1}
-                            dataType='currency'
-                        /> : <PieContentLoader />}
+                        {modelo ?
+                            <Pie
+                                data={modelo}
+                                padAngle={15}
+                                innerRadius={0.1}
+                                dataType='currency'
+                            />
+                            : <PieContentLoader />}
                     </div>
 
                 </div>

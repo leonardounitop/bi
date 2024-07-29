@@ -1,0 +1,32 @@
+.box {
+  height: 300px;
+  max-width: 100%;
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+.containerGraph {
+  display: grid;
+  gap: 1rem;
+}
+
+.containerMultas {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-top: 1rem;
+  gap: 1rem;
+}
+
+.doubleGraph {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr 1fr;
+}
+
+@media (max-width: 800px) {
+  .containerGraph,
+  .doubleGraph,
+  .containerMultas {
+    grid-template-columns: 1fr;
+  }
+}

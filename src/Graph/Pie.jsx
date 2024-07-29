@@ -1,9 +1,26 @@
 import React from 'react'
-
 import { ResponsivePie } from '@nivo/pie';
 import { currency } from '../Helper/NumberFormatter';
 
 function Pie({ data, dataType, padAngle, innerRadius }) {
+
+
+    const theme = {
+        axis: {
+            ticks: {
+                text: {
+                    fontSize: 12, // Alterar tamanho da fonte dos rótulos dos eixos
+                },
+            },
+        },
+        labels: {
+            text: {
+                fontSize: 12, // Alterar tamanho da fonte dos rótulos das barras
+            },
+        },
+    };
+
+
     return (
         <ResponsivePie
             valueFormat={value => {
@@ -11,7 +28,7 @@ function Pie({ data, dataType, padAngle, innerRadius }) {
                 if (dataType === 'currency') {
                     return `${currency.format(value)}`;
                 } else if (dataType === 'volume') {
-                    return `${value} km/l`;
+                    return `${value}km/l`;
                 }
 
                 return value;
@@ -40,28 +57,8 @@ function Pie({ data, dataType, padAngle, innerRadius }) {
             arcLabelsSkipAngle={10}
             arcLinkLabelsSkipAngle={10}
             colors={{ scheme: 'nivo' }}
-        // legends={[
-        //     {
-        //         anchor: 'right',
-        //         direction: 'column',
-        //         justify: true,
-        //         itemWidth: 80,
-        //         itemHeight: 35,
-        //         itemTextColor: '#999',
-        //         itemDirection: 'bottom-to-top',
-        //         itemOpacity: 1,
-        //         symbolSize: 6,
-        //         symbolShape: 'circle',
-        //         effects: [
-        //             {
-        //                 on: 'hover',
-        //                 style: {
-        //                     itemTextColor: '#000'
-        //                 }
-        //             }
-        //         ]
-        //     }
-        // ]}
+
+            theme={theme}
         />
 
     )

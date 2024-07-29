@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import TableContentLoader from '../../Helper/Skeleton/TableContentLoader';
 import { MdOutlineOilBarrel } from "react-icons/md";
 
-import { DataGrid } from '@mui/x-data-grid';
+
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { ptBR } from '@mui/x-data-grid/locales';
 
@@ -13,6 +13,9 @@ import { BsSpeedometer } from "react-icons/bs";
 import LoadingSpinner from '../../Helper/LoadingSpinner'
 import { decimalFormatter } from '../../Helper/NumberFormatter';
 import styles from './Abastecimento.module.css'
+
+import Table from '../../Components/Table/Table';
+
 
 const theme = createTheme(
     {
@@ -181,20 +184,11 @@ function AbastecimentoColetaEntrega() {
             </div>
             <ThemeProvider theme={theme}>
                 <div className={`${styles.containerGrid} `} style={{ height: '70vh' }} >
-                    {columns && data ? <DataGrid rows={data}
-                        columns={columns}
-                        columnBufferPx={100}
-                        // slots={{
-                        //     toolbar: GridToolbar,
-
-                        // }}
-
-                        disableRowSelectionOnClick={true}
-                        slotProps={{
-                            toolbar: {
-                                showQuickFilter: true,
-                            },
-                        }} /> : <TableContentLoader />}
+                    {columns && data ?
+                        <Table rows={data}
+                            columns={columns}
+                        />
+                        : <TableContentLoader />}
                 </div>
             </ThemeProvider>
 

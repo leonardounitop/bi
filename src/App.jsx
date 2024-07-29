@@ -13,13 +13,14 @@ function App() {
     // basename='bi'
 
     <BrowserRouter >
-      <Routes>
+      < Routes >
+        {/* <Route path="/*" element={<Abastecimento />} /> */}
         <Route path="/*" element={<Home />} />
         <Route path="/abastecimento/*" element={<Abastecimento />} />
         <Route path="/telemetria/*" element={<Telemetria />} />
-      </Routes>
+      </Routes >
 
-    </BrowserRouter>
+    </BrowserRouter >
   )
 }
 
