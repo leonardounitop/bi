@@ -16,7 +16,7 @@ import { BsGraphUpArrow } from "react-icons/bs";
 import { IoIosGitCompare } from "react-icons/io";
 import TelemetriaInfracoes from './TelemetriaInfracoes';
 import TelemetriaMultas from './TelemetriaMultas';
-import TelemetriaRanking from './TelemetriaRanking';
+// import TelemetriaRanking from './TelemetriaRanking';
 import TelemetriaComparativo from './TelemetriaComparativo';
 
 
@@ -38,9 +38,6 @@ function Telemetria() {
                         <NavLink to='produtividade'>Produtividade <MdOutlinePercent /> </NavLink>
                     </li>
                     <li>
-                        <NavLink to='ranking'>Ranking <PiRanking /> </NavLink>
-                    </li>
-                    <li>
                         <NavLink to='comparativo'>Comparativo <IoIosGitCompare /> </NavLink>
                     </li>
                     <li>
@@ -50,18 +47,13 @@ function Telemetria() {
             </nav>
 
             <FilterVault>
-
-
                 <Routes>
                     <Route path='' element={<TelemetriaGeral />} end />
                     <Route path='produtividade' element={<TelemetriaProdutividade />} />
                     <Route path='infracoes' element={<TelemetriaInfracoes />} />
-                    <Route path='ranking' element={<TelemetriaRanking />} />
                     <Route path='comparativo' element={<TelemetriaComparativo />} />
                     <Route path='multas' element={<TelemetriaMultas />} />
                 </Routes>
-
-
                 <Filter />
             </FilterVault>
 

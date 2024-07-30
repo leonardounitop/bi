@@ -1,7 +1,7 @@
 {
   "name": "dashboardbi",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -10,7 +10,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@changey/react-leaflet-markercluster": "^4.0.0-rc1",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@mui/material": "^5.15.17",
@@ -31,8 +30,6 @@
     "react-gauge-component": "^1.2.21",
     "react-icons": "^5.2.0",
     "react-leaflet": "^4.2.1",
-    "react-leaflet-cluster": "^2.1.0",
-    "react-leaflet-markercluster": "^3.0.0-rc1",
     "react-loader-spinner": "^6.1.6",
     "react-modal": "^3.16.1",
     "react-router-dom": "^6.23.0",

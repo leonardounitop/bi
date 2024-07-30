@@ -1,0 +1,88 @@
+.titulo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 2rem;
+  color: #1e3a8a;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.container {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.containerComparativo {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.containerComparativo div {
+  display: flex;
+  gap: 1rem;
+  font-size: 1.5rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.containerComparativo span {
+  font-family: Arial, Helvetica, sans-serif;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  width: 100px;
+  text-align: center;
+  padding: 0.5rem;
+  border-radius: 4px;
+}
+
+.containerComparativo div div {
+  text-transform: capitalize;
+  align-items: center;
+  color: #fff;
+  background: #1e3a8a;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  padding: 0.5rem;
+  width: 300px;
+  border-radius: 4px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.containerFiltros {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.containerFiltros h2 {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.5rem;
+  text-align: center;
+  color: #1e3a8a;
+}
+
+@media (max-width: 800px) {
+  .titulo {
+    font-size: 1.5rem;
+    justify-content: center;
+  }
+
+  .containerComparativo div {
+    font-size: 1rem;
+  }
+
+  .container {
+    grid-template-columns: 1fr;
+  }
+
+  .containerComparativo span {
+    width: 50px;
+  }
+
+  .containerFiltros {
+    order: 1;
+  }
+
+  .containerComparativo div div {
+    width: 150px;
+  }
+}

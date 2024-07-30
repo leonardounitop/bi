@@ -84,14 +84,14 @@ const LeafletMap = ({ dados }) => {
                     mapInstance.target.addLayer(markerClusterRef.current);
                 }}
             >
-                <LayersControl position="topright">
+                <LayersControl position="topright"  >
                     <BaseLayer checked name="OpenStreetMap">
                         <TileLayer
                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                             attribution="&copy; OpenStreetMap contributors"
                         />
                     </BaseLayer>
-                    <BaseLayer name="Google Hybrid">
+                    <BaseLayer name="Google">
                         <TileLayer
                             url="https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}"
                             attribution="&copy; Google"

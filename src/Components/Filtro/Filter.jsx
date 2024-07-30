@@ -36,15 +36,13 @@ const Filter = () => {
 
     // Função Genérica para setar o que ira no fetch.
     const handleFilterChange = (setFunction) => (selectedOptions) => {
-
         const values = selectedOptions.map(option => option.value);
         setFunction(values.length > 0 ? values : null);
-
     };
 
     // Desabilitar o filtro em páginas que não precisam
     useEffect(() => {
-        if (pathname.includes('coleta') || pathname.includes('media')) {
+        if (pathname.includes('coleta') || pathname.includes('media') || pathname.includes('comparativo')) {
             setIsHidden(true);
         } else {
             setIsHidden(false);

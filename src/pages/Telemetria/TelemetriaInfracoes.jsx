@@ -69,7 +69,8 @@ function TelemetriaInfracoes() {
                 <div>
                     <div className={styles.containerDoubleGraphs}>
                         <div className={styles.containerBar}>
-                            {placasInfratoras && !loading ? <Bar data={placasInfratoras} layout='horizontal' keys={['infracoes']} customBarWidth={true} indexBy="placa" margin={{ top: 10, right: 10, bottom: 0, left: 80 }} /> : <BarContentLoader />}
+                            {placasInfratoras && !loading ?
+                                <Bar data={placasInfratoras} layout='horizontal' keys={['infracoes']} customBarWidth={true} indexBy="placa" margin={{ top: 10, right: 10, bottom: 0, left: 80 }} /> : <BarContentLoader />}
                         </div>
                         <div className={styles.containerBar}>
                             {motoristasInfratores && !loading ? <Bar data={motoristasInfratores} layout='horizontal' keys={['infracoes']} customBarWidth={true} indexBy="motorista" margin={{ top: 10, right: 10, bottom: 0, left: 100 }} /> : <BarContentLoader />}
