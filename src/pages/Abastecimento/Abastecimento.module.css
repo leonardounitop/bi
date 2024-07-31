@@ -1,173 +1,166 @@
 .title {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 1rem;
-    color: #1e3a8a;
-    margin-top: 1.125rem;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    position: relative;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1rem;
+  color: #1e3a8a;
+  margin-top: 1.125rem;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  position: relative;
 }
 
 .containerChart {
-    margin: 1rem 0;
-    display: grid;
-    gap: 1rem;
-    grid-template-columns: 1fr 1fr;
+  margin: 1rem 0;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr 1fr;
 }
 
 .containerTripleChart {
-    margin: 1rem 0;
-    display: grid;
-    gap: 1rem;
-    grid-template-columns: 1fr 1fr 1fr; 
+  margin: 1rem 0;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr 1fr 1fr;
 }
 
 .graphBox {
-    height: 300px;
-    max-width: 100%;
-    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
-    border-radius: 4px;
+  height: 300px;
+  max-width: 100%;
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  background-color: #fff;
 }
 
 .graphBoxGrid {
-    height: 300px;
-    max-width: 100%;
-    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
-    border-radius: 4px;
+  height: 300px;
+  background-color: #fff;
+  max-width: 100%;
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
 }
 
 .doubleChart {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
-    gap: 1rem;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 1rem;
 }
 
 .placa {
-    text-align: center; 
-    box-sizing: border-box;
-    background: linear-gradient(35deg, #1e3a8a, #0e1a3a);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    padding: 0.875rem;
-    color: white;
-    font-size: 0.875rem;
-    border-radius: 4px;
-    cursor: pointer;
+  text-align: center;
+  box-sizing: border-box;
+  background: linear-gradient(35deg, #1e3a8a, #0e1a3a);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  padding: 0.875rem;
+  color: white;
+  font-size: 0.875rem;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 .containerGrid {
-    height: 500px;
-    width: 100%;
-    margin-top: 1.125rem;
+  height: 500px;
+  width: 100%;
+  margin-top: 1.125rem;
 }
 
-
-.atingimentoMeta{
-    box-sizing: border-box;
-    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
-    padding: 8px;
-    border-radius: 4px;
-    font-weight: bold;
+.atingimentoMeta {
+  box-sizing: border-box;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
+  padding: 8px;
+  border-radius: 4px;
+  font-weight: bold;
 }
 
 .containerList {
-    margin-top: 1rem;
+  margin-top: 1rem;
 }
 
 .listaIndice {
-    list-style: none;
-    margin-top: 0.4rem;
+  list-style: none;
+  margin-top: 0.4rem;
 }
 
 .listaIndice li {
-    display: flex;
-    font-family: Arial, Helvetica, sans-serif;
-    align-items: center;
-    gap: 0.4rem;
+  display: flex;
+  font-family: Arial, Helvetica, sans-serif;
+  align-items: center;
+  gap: 0.4rem;
 }
 
 .listaIndice li::before {
-    content: "";
-    width: 10px;
-    height: 10px;
-    border-radius: 4px;
-    display: block;
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 4px;
+  display: block;
 }
 
-
 .listIndiceGreen::before {
-    background: #15803d;
+  background: #15803d;
 }
 
 .listIndiceYellow::before {
-    background: #facc15;
+  background: #facc15;
 }
 
 .listIndiceRed::before {
-    background: #b91c1c;
+  background: #b91c1c;
 }
 
 .listTitle {
-    text-transform: uppercase;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 1rem;
-    font-weight: bold;
-    display: inline;
-    background: #eee;
-    padding: 0.2rem;
+  text-transform: uppercase;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1rem;
+  font-weight: bold;
+  display: inline;
+  background: #eee;
+  padding: 0.2rem;
 }
 
-
 .subtitle {
-        font-family: Arial, Helvetica, sans-serif;
-        color: #1e3a8a;
-        box-sizing: border-box;
-        border-radius: 4px;
-        text-transform: uppercase;
-        font-size: 1.125rem;
-        display: inline-block;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #1e3a8a;
+  box-sizing: border-box;
+  border-radius: 4px;
+  text-transform: uppercase;
+  font-size: 1.125rem;
+  display: inline-block;
 }
 
 .subtitle::after {
-    content: "";
-    display: block;
-    width: 100%;
-    height: 2px;
-    background: #1e3a8a;
+  content: "";
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: #1e3a8a;
 }
 
 .subtitleContainer {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
- 
 
 .containerBtnModal {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    margin-bottom: 8px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 8px;
 }
 
+@media (max-width: 700px) {
+  .title {
+    margin-top: 2rem;
+  }
 
-@media (max-width:700px) {
+  .containerChart,
+  .containerTripleChart {
+    margin: 1rem 0;
+    grid-template-columns: 1fr;
+  }
 
-    .title {
-        margin-top: 2rem;
-    }   
-    
-    .containerChart, .containerTripleChart {
-        margin: 1rem 0;
-        grid-template-columns: 1fr;
-    }
-
-    .doubleChart {
-        grid-template-columns: 1fr;
-    }
-
+  .doubleChart {
+    grid-template-columns: 1fr;
+  }
 }
-
-
-

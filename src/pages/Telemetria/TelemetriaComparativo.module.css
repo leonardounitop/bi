@@ -60,6 +60,12 @@
   color: #1e3a8a;
 }
 
+.containerData {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 @media (max-width: 800px) {
   .titulo {
     font-size: 1.5rem;
@@ -79,6 +85,7 @@
   }
 
   .containerFiltros {
+    margin-top: 1rem;
     order: 1;
   }
 

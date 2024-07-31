@@ -1,4 +1,5 @@
 .containerFaixas {
+  margin-top: 1rem;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   justify-content: space-between;
@@ -34,16 +35,34 @@
 }
 
 .containerBar {
-  margin-top: 2rem;
+  margin-top: 1rem;
   margin-bottom: 1rem;
   display: grid;
   gap: 1rem;
   grid-template-columns: 1fr 2fr 1fr;
 }
 
+.labelBox {
+  font-family: Arial, Helvetica, sans-serif;
+  text-transform: capitalize;
+  font-size: 0.875rem;
+  font-weight: bold;
+  color: #334155;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  position: absolute;
+  top: 0;
+  background: linear-gradient(to right, #f1f5f9, #94a3b8);
+  padding: 6px;
+  border-radius: 4px 0 0 0;
+}
+
 .containerGauge {
   background-color: #fff;
-  padding-bottom: 1rem;
+  /* padding-top: 1rem; */
+  position: relative;
   border-radius: 4px;
   display: grid;
   align-items: center;
@@ -57,10 +76,13 @@
 }
 
 .box {
-  height: 300px;
+  height: 280px;
   max-width: 100%;
+  position: relative;
+  /* padding-top: 1.2rem; */
   box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
   border-radius: 4px;
+  background-color: #fff;
 }
 
 @media (max-width: 768px) {
@@ -77,7 +99,7 @@
   }
 
   .containerBar {
-    margin-top: 2rem;
+    margin-top: 1rem;
     margin-bottom: 1rem;
     display: grid;
     gap: 1rem;
@@ -85,6 +107,6 @@
   }
 
   .containerGauge {
-    height: 300px;
+    height: 270px;
   }
 }

@@ -5,6 +5,7 @@ import Pie from '../../Graph/Pie'
 import BarContentLoader from '../../Helper/Skeleton/BarContentLoader'
 import PieContentLoader from '../../Helper/Skeleton/PieContentLoader'
 import GaugeComponent from 'react-gauge-component';
+import { decimalFormatter } from '../../Helper/NumberFormatter';
 
 
 import { PiEngineBold } from "react-icons/pi";
@@ -12,6 +13,17 @@ import { AiOutlineThunderbolt } from "react-icons/ai";
 import { FiAlertTriangle } from "react-icons/fi";
 import { GoGear } from "react-icons/go";
 import { FaRegClock } from "react-icons/fa6";
+import { MdOutlineOilBarrel } from "react-icons/md";
+import { FaRoad } from "react-icons/fa";
+import { BsSpeedometer } from "react-icons/bs";
+import { RiTimerLine } from "react-icons/ri";
+
+
+
+// icones dos labels
+import { MdOutlinePercent } from "react-icons/md";
+
+
 
 import LoadingSpinner from '../../Helper/LoadingSpinner'
 import { FilterContext } from '../../Context/FilterVault';
@@ -27,6 +39,7 @@ const backgroundColor = {
 
 function TelemetriaGeral() {
 
+    const [dadosStats, setDadosStats] = useState(null);
     const [dadosCards, setDadosCards] = useState(null);
     const [percMensal, setPercMensal] = useState(null);
     const [percMarcas, setPercMarcas] = useState(null);
@@ -64,6 +77,7 @@ function TelemetriaGeral() {
             try {
                 (async () => {
                     const [
+                        jsonEstatisticas,
                         jsonCards,
                         jsonPercentualMensal,
                         jsonDadosMarca,
@@ -72,6 +86,7 @@ function TelemetriaGeral() {
                         jsonTotalInfracoes,
                         jsonConsumoMedioMensal
                     ] = await Promise.all([
+                        fetchData('obterCardsEstatisticas', filterFetchs),
                         fetchData('obterDadosCards', filterFetchs),
                         fetchData('obterPercentualMensal', filterFetchs),
                         fetchData('obterDadosMarca', filterFetchs),
@@ -81,8 +96,10 @@ function TelemetriaGeral() {
                         fetchData('obterConsumoMedioMensal', filterFetchs),
                     ]);
 
+                    console.log(jsonEstatisticas);
 
-
+                    if (jsonEstatisticas)
+                        setDadosStats(jsonEstatisticas);
                     if (jsonCards)
                         setDadosCards(jsonCards);
                     if (jsonPercentualMensal)
@@ -113,6 +130,35 @@ function TelemetriaGeral() {
 
     return (
         <section className=' animeLeft'>
+
+            <div className="container-cards" >
+                <div className="card">
+                    <h2>Consumo <MdOutlineOilBarrel /> </h2>
+                    <span className="card-value">
+                        {dadosStats ? decimalFormatter.format(dadosStats.consumo) : <LoadingSpinner />}
+                    </span>
+                </div>
+                <div className="card">
+                    <h2>Distância <FaRoad /></h2>
+                    <span className="card-value">
+                        {dadosStats ? decimalFormatter.format(dadosStats.distancia) : <LoadingSpinner />}
+                    </span>
+                </div>
+                <div className="card">
+                    <h2>Média <BsSpeedometer /></h2>
+                    <span className="card-value">
+                        {dadosStats ? decimalFormatter.format(dadosStats.media) + ' km/l' : <LoadingSpinner />}
+
+                    </span>
+                </div>
+                <div className="card">
+                    <h2>Tempo Total <RiTimerLine /> </h2>
+                    <span className="card-value">
+                        {dadosStats ? dadosStats.tempo_total : <LoadingSpinner />}
+
+                    </span>
+                </div>
+            </div>
 
             <div className={styles.containerFaixas}>
                 <div className={styles.containerCard}>
@@ -168,11 +214,14 @@ function TelemetriaGeral() {
 
                     </div>
                 </div>
+
+
             </div>
 
             <div className={styles.containerBar}>
 
                 <div className={styles.containerGauge}>
+                    {/* <span className={styles.labelBox}> Produtividade  <MdOutlinePercent />  </span> */}
                     <GaugeComponent
                         value={percent}
                         type="semicircle"
@@ -211,6 +260,7 @@ function TelemetriaGeral() {
                 </div>
 
                 <div className={styles.box}  >
+                    {/* <span className={styles.labelBox}> Produtividade  <MdOutlinePercent />  </span> */}
 
                     {percMensal ? <Bar
                         data={percMensal}

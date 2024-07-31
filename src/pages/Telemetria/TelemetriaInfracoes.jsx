@@ -9,6 +9,8 @@ import BarContentLoader from '../../Helper/Skeleton/BarContentLoader';
 import { FilterContext } from '../../Context/FilterVault';
 import Bar from '../../Graph/Bar';
 import LeafletMap from '../../Helper/Leaflet/LeafletMap';
+import LoadingSpinner from '../../Helper/LoadingSpinner'
+
 
 const arrayTelemetria = [
     { titulo: 'Excesso Pista Seca', icone: <FaRoad />, consulta: 'obterInfratoresSeco', btn: 'Seco' },
@@ -28,6 +30,8 @@ function TelemetriaInfracoes() {
     const [infracaoMensal, setInfracaoMensal] = useState(null);
     const [dadosMapa, setDadosMapa] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [quantidadeInfracoes, setQuantidadeInfracoes] = useState(null);
+    const [tempoInfracoes, setTempoInfracoes] = useState(null);
 
     useEffect(() => {
         async function fetchDados() {
@@ -36,11 +40,15 @@ function TelemetriaInfracoes() {
                 const consulta = arrayTelemetria[posArray].consulta;
                 const json = await fetchData(consulta, filterFetchs);
 
+
+
                 if (json) {
                     setPlacasInfratoras(json.placas);
                     setMotoristasInfratores(json.motoristas);
                     setInfracaoMensal(json.mensal);
                     setDadosMapa(json.mapa);
+                    setQuantidadeInfracoes(json.total);
+                    setTempoInfracoes(json.duracao);
                 }
             } catch (error) {
                 console.log(error);
@@ -55,7 +63,9 @@ function TelemetriaInfracoes() {
     return (
         <section className='animeLeft'>
             <div className={styles.containerTitulo}>
-                <h1 className={styles.titulo}>{arrayTelemetria[posArray].titulo} {arrayTelemetria[posArray].icone}</h1>
+                <h1 className={styles.titulo}>{arrayTelemetria[posArray].titulo}   {arrayTelemetria[posArray].icone}</h1>
+                <span className={styles.label}>Infrações: <span> {quantidadeInfracoes && !loading ? quantidadeInfracoes : <LoadingSpinner />} </span></span>
+                <span className={styles.label}>Tempo Total: <span> {tempoInfracoes && !loading ? tempoInfracoes : <LoadingSpinner />} </span> </span>
                 <div className={styles.containerBtns}>
                     {arrayTelemetria.map((arr, index) => (
                         <button key={index} onClick={() => setPosArray(index)}

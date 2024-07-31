@@ -63,6 +63,11 @@ const camposComparativo = [
 
 ]
 
+
+const camposFiltro = [
+
+]
+
 function TelemetriaComparativo() {
     return (
         <section className='animeLeft'>
@@ -71,10 +76,11 @@ function TelemetriaComparativo() {
 
             <div className={styles.container}>
                 <div className={styles.containerFiltros}>
-                    <h2>Filtro</h2>
-                    <FiltroIndividual placeholder="Ano" />
-                    <FiltroIndividual placeholder="Mês" />
-                    <FiltroIndividual placeholder="Dia" />
+                    <div className={styles.containerData}>
+                        <FiltroIndividual placeholder="Ano" />
+                        <FiltroIndividual placeholder="Mês" />
+                        <FiltroIndividual placeholder="Dia" />
+                    </div>
                     <FiltroIndividual placeholder="Filial" />
                     <FiltroIndividual placeholder="Marca" />
                     <FiltroIndividual placeholder="Modelo" />
@@ -87,11 +93,11 @@ function TelemetriaComparativo() {
                     })}
                 </div>
                 <div className={styles.containerFiltros}>
-                    <h2>Filtro</h2>
-
-                    <FiltroIndividual placeholder="Ano" />
-                    <FiltroIndividual placeholder="Mês" />
-                    <FiltroIndividual placeholder="Dia" />
+                    <div className={styles.containerData}>
+                        <FiltroIndividual placeholder="Ano" />
+                        <FiltroIndividual placeholder="Mês" />
+                        <FiltroIndividual placeholder="Dia" />
+                    </div>
                     <FiltroIndividual placeholder="Filial" />
                     <FiltroIndividual placeholder="Marca" />
                     <FiltroIndividual placeholder="Modelo" />
