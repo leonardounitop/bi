@@ -187,6 +187,7 @@ function AbastecimentoColetaEntrega() {
                     {columns && data ?
                         <Table rows={data}
                             columns={columns}
+                            hideFooter={true}
                         />
                         : <TableContentLoader />}
                 </div>

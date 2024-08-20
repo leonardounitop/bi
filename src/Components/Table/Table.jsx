@@ -5,7 +5,7 @@ import { gridClasses } from '@mui/x-data-grid';
 // Lazy load do DataGrid
 const DataGrid = lazy(() => import('@mui/x-data-grid').then(module => ({ default: module.DataGrid })));
 
-function Table({ rows, columns, onRowClick }) {
+function Table({ rows, columns, onRowClick, hideFooter = false, autoHeight = false }) {
     return (
         <Suspense fallback={<TableContentLoader />}>
             <DataGrid
@@ -23,8 +23,11 @@ function Table({ rows, columns, onRowClick }) {
                 slotProps={{
                     toolbar: {
                         showQuickFilter: true,
+
                     },
                 }}
+                hideFooter={hideFooter}
+                autoHeight={autoHeight}
             />
         </Suspense>
     );

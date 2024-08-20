@@ -42,7 +42,12 @@ const Filter = () => {
 
     // Desabilitar o filtro em páginas que não precisam
     useEffect(() => {
-        if (pathname.includes('coleta') || pathname.includes('media') || pathname.includes('comparativo')) {
+        if (
+            pathname.includes('abastecimento/coleta')
+            || pathname.includes('abastecimento/media')
+            || pathname.includes('abastecimento/comparativo')
+            || pathname.includes('abastecimento/premio')
+        ) {
             setIsHidden(true);
         } else {
             setIsHidden(false);

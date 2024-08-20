@@ -169,25 +169,29 @@ function AbastecimentoMediaFilial() {
             <h2 className={styles.subtitle}>Média Diesel - Tráfego - {'Matriz'}</h2>
 
             <ThemeProvider theme={theme}>
-                <div className={styles.containerGrid} style={{ height: '400px' }} >
+                <div className={styles.containerGrid} >
                     {dataMatriz ?
                         <Table
                             rows={dataMatriz}
                             columns={columns}
+                            hideFooter={true}
+                            autoHeight={true}
                         />
 
-                        : <TableContentLoader />}
+                        : <div style={{ height: 400 }}> <TableContentLoader /> </div>}
                 </div>
             </ThemeProvider>
-            <h2 className={styles.subtitle} style={{ marginTop: 10 }}>Média Diesel - Tráfego - {'CGR'}</h2>
+            <h2 className={styles.subtitle} style={{ marginTop: '1rem' }} >Média Diesel - Tráfego - {'CGR'}</h2>
             <ThemeProvider theme={theme}>
-                <div className={styles.containerGrid} style={{ height: '400px' }} >
+                <div className={styles.containerGrid}  >
                     {dataCGR ?
                         <Table
                             rows={dataCGR}
                             columns={columns}
+                            hideFooter={true}
+                            autoHeight={true}
                         />
-                        : <TableContentLoader />}
+                        : <div style={{ height: 400 }}> <TableContentLoader /> </div>}
                 </div>
             </ThemeProvider>
 

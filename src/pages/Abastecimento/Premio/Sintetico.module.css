@@ -1,0 +1,27 @@
+.subtitulo {
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #1e3a8a;
+  font-size: 1.5rem;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.containerGraficoPrincipal {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr 1fr;
+  margin-bottom: 1rem;
+}
+
+.doubleGraph {
+  background: #fff;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+}
+
+.containerDoubleTable {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}

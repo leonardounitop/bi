@@ -96,7 +96,6 @@ function TelemetriaGeral() {
                         fetchData('obterConsumoMedioMensal', filterFetchs),
                     ]);
 
-                    console.log(jsonEstatisticas);
 
                     if (jsonEstatisticas)
                         setDadosStats(jsonEstatisticas);

@@ -6,6 +6,8 @@ import { RiTruckLine } from "react-icons/ri";
 import { FaRegBuilding } from "react-icons/fa";
 import { PiRanking } from "react-icons/pi";
 import { MdOutlineWaterDrop } from "react-icons/md";
+import { GiTargetPrize } from "react-icons/gi";
+
 
 import { Route, Routes, NavLink } from 'react-router-dom';
 import AbastecimentoGeral from './AbastecimentoGeral';
@@ -15,6 +17,7 @@ import AbastecimentoMediaFilial from './AbastecimentoMediaFilial';
 import Filter from '../../Components/Filtro/Filter';
 import FilterVault from '../../Context/FilterVault';
 import AbastecimentoRanking from './AbastecimentoRanking';
+import AbastecimentoPremio from './AbastecimentoPremio';
 
 function Abastecimento() {
 
@@ -58,6 +61,9 @@ function Abastecimento() {
                             <NavLink to='coleta'>Coleta - Entrega <MdOutlineWaterDrop /> </NavLink>
                         </li>
                         <li>
+                            <NavLink to='premio'>Prêmio <GiTargetPrize /> </NavLink>
+                        </li>
+                        <li>
                             <NavLink to='media'>Tráfego <FaRegBuilding /> </NavLink>
                         </li>
                         <li>
@@ -72,6 +78,7 @@ function Abastecimento() {
                         <Route path='/' element={<AbastecimentoGeral />} />
                         <Route path='veiculos' element={<AbastecimentoVeiculos />} />
                         <Route path='ranking' element={<AbastecimentoRanking />} />
+                        <Route path='premio/*' element={<AbastecimentoPremio />} />
                         <Route path='coleta' element={<AbastecimentoColetaEntrega />} />
                         <Route path='media' element={<AbastecimentoMediaFilial />} />
                     </Routes>
