@@ -14,14 +14,50 @@
   margin-bottom: 1rem;
 }
 
-.doubleGraph {
+.containerTable,
+.containerDoubleGraph {
+  height: 300px;
+}
+
+.graph {
   background: #fff;
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
   border-radius: 4px;
+  height: 300px;
 }
 
 .containerDoubleTable {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
+}
+
+.containerTable {
+  height: 300px;
+}
+
+.containerTable {
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.variacaoPerc {
+  box-sizing: border-box;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
+  padding: 8px;
+  border-radius: 4px;
+  font-weight: bold;
+  color: #fff;
+}
+
+@media (max-width: 800px) {
+  .containerDoubleTable,
+  .containerGraficoPrincipal {
+    display: block;
+  }
+
+  .graph {
+    margin-top: 1rem;
+  }
 }

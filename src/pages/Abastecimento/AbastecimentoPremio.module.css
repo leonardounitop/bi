@@ -21,3 +21,9 @@
 .nav a:hover {
   background-color: #3b82f6;
 }
+
+@media (max-width: 800px) {
+  .nav ul {
+    justify-content: center;
+  }
+}

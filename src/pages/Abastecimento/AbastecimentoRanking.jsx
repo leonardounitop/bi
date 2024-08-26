@@ -13,8 +13,6 @@ function AbastecimentoRanking() {
     const [listMelhores, setListMelhores] = useState(null);
     const [listPiores, setListPiores] = useState(null);
 
-
-
     const dadosFiltro = useContext(FilterContext);
     const { url, fetchData, filterFetchs } = dadosFiltro;
 
@@ -29,6 +27,7 @@ function AbastecimentoRanking() {
                 if ('melhores' in json && 'piores' in json) {
                     setListMelhores(json.melhores);
                     setListPiores(json.piores);
+
                 }
 
             } catch (e) {

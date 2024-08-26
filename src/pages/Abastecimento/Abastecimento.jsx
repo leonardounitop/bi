@@ -58,10 +58,10 @@ function Abastecimento() {
                             <NavLink to='ranking'>Ranking <PiRanking /> </NavLink>
                         </li>
                         <li>
-                            <NavLink to='coleta'>Coleta - Entrega <MdOutlineWaterDrop /> </NavLink>
+                            <NavLink to='premio'>Prêmio <GiTargetPrize /> </NavLink>
                         </li>
                         <li>
-                            <NavLink to='premio'>Prêmio <GiTargetPrize /> </NavLink>
+                            <NavLink to='coleta'>Coleta - Entrega <MdOutlineWaterDrop /> </NavLink>
                         </li>
                         <li>
                             <NavLink to='media'>Tráfego <FaRegBuilding /> </NavLink>

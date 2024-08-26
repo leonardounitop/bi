@@ -3,6 +3,7 @@ import { Routes, Route, NavLink, useLocation } from 'react-router-dom';
 import styles from './AbastecimentoPremio.module.css';
 import Sintetico from './Premio/Sintetico';
 import Analitico from './Premio/Analitico';
+import Media from './Premio/Media';
 
 function AbastecimentoPremio() {
 
@@ -32,7 +33,7 @@ function AbastecimentoPremio() {
             <Routes>
                 <Route path="/" element={<Sintetico />} />
                 <Route path="analitico" element={<Analitico />} />
-                <Route path="media" element={<Sintetico />} />
+                <Route path="media" element={<Media />} />
             </Routes>
         </section>
     );
