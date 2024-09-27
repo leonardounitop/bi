@@ -79,11 +79,11 @@ const columnsSuperacao = [
                 color = '#15803d';
 
 
-            return value ? <div>
+            return <div>
                 <span className={styles.variacaoPerc} style={{ backgroundColor: color }} >
-                    {` ${value}%`}
+                    {` ${value ? value : 0}%`}
                 </span>
-            </div> : ''
+            </div>
         },
 
     },

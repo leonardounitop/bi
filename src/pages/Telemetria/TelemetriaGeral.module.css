@@ -1,8 +1,14 @@
 .containerFaixas {
   margin-top: 1rem;
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   justify-content: space-between;
+  gap: 1rem;
+}
+
+.containerCards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   gap: 1rem;
 }
 
@@ -90,6 +96,10 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: 1rem;
+  }
+
+  .containerCards {
+    grid-template-columns: 1fr;
   }
 
   .doubleContainer {

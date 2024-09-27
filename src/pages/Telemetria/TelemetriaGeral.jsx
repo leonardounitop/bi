@@ -26,7 +26,7 @@ import { MdOutlinePercent } from "react-icons/md";
 
 
 import LoadingSpinner from '../../Helper/LoadingSpinner'
-import { FilterContext } from '../../Context/FilterVault';
+import { FilterTelemetriaContext } from '../../Context/FilterTelemetriaProvider';
 import Line from '../../Graph/Line';
 
 const backgroundColor = {
@@ -68,14 +68,18 @@ function TelemetriaGeral() {
         }));
     };
 
-    const dadosFilter = useContext(FilterContext);
+    const dadosFilter = useContext(FilterTelemetriaContext);
     const { fetchData, filterFetchs, url } = dadosFilter;
+
+
 
     // Fetch dos graficos 
     useEffect(() => {
         if (url)
             try {
                 (async () => {
+
+
                     const [
                         jsonEstatisticas,
                         jsonCards,
@@ -97,6 +101,8 @@ function TelemetriaGeral() {
                     ]);
 
 
+
+
                     if (jsonEstatisticas)
                         setDadosStats(jsonEstatisticas);
                     if (jsonCards)
@@ -110,7 +116,7 @@ function TelemetriaGeral() {
                     if (jsonProdutividadeGeral)
                         setPercent(jsonProdutividadeGeral.produtividade);
                     if (jsonTotalInfracoes)
-                        setTotalInfracoes(jsonTotalInfracoes);
+                        setTotalInfracoes(jsonTotalInfracoes.length ? jsonTotalInfracoes : [{ value: 0, id: 'Nenhuma Infração' }]);
                     if (jsonConsumoMedioMensal) {
                         const consumoMensalTransformado = transformData(jsonConsumoMedioMensal);
                         setConsumoMensalMarca(consumoMensalTransformado);
@@ -130,7 +136,7 @@ function TelemetriaGeral() {
     return (
         <section className=' animeLeft'>
 
-            <div className="container-cards" >
+            <div className={styles.containerCards} >
                 <div className="card">
                     <h2>Consumo <MdOutlineOilBarrel /> </h2>
                     <span className="card-value">
@@ -153,7 +159,7 @@ function TelemetriaGeral() {
                 <div className="card">
                     <h2>Tempo Total <RiTimerLine /> </h2>
                     <span className="card-value">
-                        {dadosStats ? dadosStats.tempo_total : <LoadingSpinner />}
+                        {dadosStats ? dadosStats.tempo_total || '00:00:00' : <LoadingSpinner />}
 
                     </span>
                 </div>
@@ -201,15 +207,6 @@ function TelemetriaGeral() {
                     </div>
                     <div className={styles.cardTime} style={{ background: backgroundColor.azul }}>
                         <span>{dadosCards ? dadosCards.faixa_azul : '00:00:00'}</span> <GoGear />
-
-                    </div>
-                </div>
-                <div className={styles.containerCard}>
-                    <div className={styles.cardPerc}>
-                        {dadosCards ? `${dadosCards.per_azul}%` : <LoadingSpinner width={24} height={24} />}
-                    </div>
-                    <div className={styles.cardTime} style={{ background: backgroundColor.cinza }}>
-                        <span>{dadosCards ? dadosCards.faixa_azul : '00:00:00'}</span> <FaRegClock />
 
                     </div>
                 </div>
@@ -274,6 +271,7 @@ function TelemetriaGeral() {
                         indexBy="mes"
                         dataType='percent'
                         telemetria={true}
+                        customBarWidth={false}
                         margin={{ bottom: 25, left: 65, right: 20, top: 10 }}
 
                     /> : <BarContentLoader />}
@@ -332,13 +330,18 @@ function TelemetriaGeral() {
                 </div>
 
 
+                <div>
+
+                </div>
+
+                {/* 
                 <div className={styles.box} >
                     {totalInfracoes ? <Pie
                         data={totalInfracoes}
                         padAngle={15}
                     /> : <PieContentLoader />}
 
-                </div>
+                </div> */}
 
             </div>
 

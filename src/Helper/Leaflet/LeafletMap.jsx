@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { MapContainer, TileLayer, LayersControl } from 'react-leaflet';
+import { format } from 'date-fns';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet.markercluster/dist/MarkerCluster.css';
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
@@ -21,8 +22,8 @@ const convertToGeoJSON = (dados) => {
                 placa: point.placa,
                 velocidade: point.velocidade,
                 tecnologia: point.tecnologia,
-                duracao_evento: point.duracao_evento,
-                data_evento: point.data_evento,
+                duracao: point.duracao,
+                dataposicao: format(point.dataposicao, 'dd/MM/yyyy hh:mm:ss'),
                 evento: point.evento
             }
         }))
@@ -58,8 +59,8 @@ const LeafletMap = ({ dados }) => {
                         Latitude: ${feature.geometry.coordinates[1]} <br />
                         Longitude: ${feature.geometry.coordinates[0]} <br />
                         Equipamento: ${feature.properties.tecnologia} <br />
-                        Duração: ${feature.properties.duracao_evento ? feature.properties.duracao_evento : '00:00:00'} <br />
-                        Data: ${feature.properties.data_evento} <br />
+                        Duração: ${feature.properties.duracao ? feature.properties.duracao : '00:00:00'} <br />
+                        Data: ${feature.properties.dataposicao} <br />
                         Evento: ${feature.properties.evento}
                     `);
                 },

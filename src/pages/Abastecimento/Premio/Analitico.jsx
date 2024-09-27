@@ -305,6 +305,7 @@ function Analitico() {
     const [dadosSegundoSemestre, setDadosSegundoSemestre] = useState(null);
     const [dadosVariacao, setDadosVariacao] = useState(null);
 
+
     const [lineValues, setLineValues] = useState(null);
 
 

@@ -1,8 +1,8 @@
 import React from 'react';
 import TelemetriaGeral from './TelemetriaGeral';
 import { Routes, Route, NavLink } from 'react-router-dom';
-import Filter from '../../Components/Filtro/Filter';
-import FilterVault from '../../Context/FilterVault';
+import FilterTelemetria from '../../Components/Filtro/FilterTelemetria';
+import FilterTelemetriaProvider from '../../Context/FilterTelemetriaProvider';
 // import TelemetriaProdutividade from './TelemetriaProdutividade';
 
 import { GoGraph } from 'react-icons/go';
@@ -46,7 +46,7 @@ function Telemetria() {
                 </ul>
             </nav>
 
-            <FilterVault>
+            <FilterTelemetriaProvider>
                 <Routes>
                     <Route path='' element={<TelemetriaGeral />} end />
                     {/* <Route path='produtividade' element={<TelemetriaProdutividade />} />     */}
@@ -54,8 +54,8 @@ function Telemetria() {
                     <Route path='comparativo' element={<TelemetriaComparativo />} />
                     <Route path='multas' element={<TelemetriaMultas />} />
                 </Routes>
-                <Filter />
-            </FilterVault>
+                <FilterTelemetria />
+            </FilterTelemetriaProvider>
 
 
 

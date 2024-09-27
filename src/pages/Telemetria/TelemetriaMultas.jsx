@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { FilterContext } from '../../Context/FilterVault';
+import { FilterTelemetriaContext } from '../../Context/FilterTelemetriaProvider';
 import { TbReportMoney } from "react-icons/tb";
 import { GrMoney } from "react-icons/gr";
 import { IoAlertCircleOutline } from "react-icons/io5";
@@ -23,7 +23,7 @@ function TelemetriaMultas() {
     const [loading, setLoading] = useState(false);
 
 
-    const dadosFilter = useContext(FilterContext);
+    const dadosFilter = useContext(FilterTelemetriaContext);
     const { fetchData, filterFetchs, url } = dadosFilter;
 
 
@@ -169,7 +169,7 @@ function TelemetriaMultas() {
 
                 </div>
 
-                <LeafletMap />
+                {/* <LeafletMap /> */}
 
             </div>
 

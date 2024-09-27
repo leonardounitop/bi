@@ -16,6 +16,7 @@
 .containerComparativo {
   display: grid;
   gap: 0.5rem;
+  font-family: sans-serif;
 }
 
 .containerComparativo div {
@@ -27,11 +28,13 @@
 }
 
 .containerComparativo span {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: sans-serif;
   box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-  width: 100px;
+  font-size: 1.125rem;
+  font-weight: bold;
+  width: 120px;
   text-align: center;
-  padding: 0.5rem;
+  padding: 0.6rem;
   border-radius: 4px;
 }
 
@@ -48,9 +51,7 @@
 }
 
 .containerFiltros {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  display: grid;
 }
 
 .containerFiltros h2 {
@@ -73,23 +74,31 @@
   }
 
   .containerComparativo div {
-    font-size: 1rem;
+    font-size: 0.875rem;
   }
 
   .container {
     grid-template-columns: 1fr;
   }
 
+  .containerData {
+    display: block;
+  }
+
   .containerComparativo span {
-    width: 50px;
+    width: 80px;
+    font-size: 0.875rem;
   }
 
   .containerFiltros {
     margin-top: 1rem;
-    order: 1;
+  }
+
+  .containerFiltros:first-child {
+    margin-bottom: 1rem;
   }
 
   .containerComparativo div div {
-    width: 150px;
+    width: 120px;
   }
 }

@@ -48,7 +48,7 @@ const CustomBarComponent = ({ bar: { data, ...bar }, style, formatValue }) => {
                     y={to(style.height, (value) => value / 2)}
                     textAnchor="start"
                     dominantBaseline="central"
-                    style={{ fill: '#333', fontSize: 12, fontFamily: 'sans-serif' }}
+                    style={{ fill: '#333', fontSize: 10, fontFamily: 'sans-serif' }}
                 >
                     {formattedValue}
                 </animated.text>
@@ -58,7 +58,7 @@ const CustomBarComponent = ({ bar: { data, ...bar }, style, formatValue }) => {
                     y={to(style.height, (value) => value / 2)}
                     textAnchor="middle"
                     dominantBaseline="central"
-                    style={{ fill: '#333', fontSize: 12, fontFamily: 'sans-serif' }}
+                    style={{ fill: '#333', fontSize: 10, fontFamily: 'sans-serif' }}
                 >
                     {formattedValue}
                 </animated.text>

@@ -6,7 +6,7 @@ import { GiCarWheel } from "react-icons/gi";
 import { FaRoad } from "react-icons/fa";
 import { IoIosSpeedometer } from "react-icons/io";
 import BarContentLoader from '../../Helper/Skeleton/BarContentLoader';
-import { FilterContext } from '../../Context/FilterVault';
+import { FilterTelemetriaContext } from '../../Context/FilterTelemetriaProvider';
 import Bar from '../../Graph/Bar';
 import LeafletMap from '../../Helper/Leaflet/LeafletMap';
 import LoadingSpinner from '../../Helper/LoadingSpinner'
@@ -21,7 +21,7 @@ const arrayTelemetria = [
 ];
 
 function TelemetriaInfracoes() {
-    const dadosFilter = useContext(FilterContext);
+    const dadosFilter = useContext(FilterTelemetriaContext);
     const { fetchData, filterFetchs, url } = dadosFilter;
 
     const [posArray, setPosArray] = useState(0);
@@ -41,11 +41,17 @@ function TelemetriaInfracoes() {
                 const json = await fetchData(consulta, filterFetchs);
 
 
-
                 if (json) {
-                    setPlacasInfratoras(json.placas);
-                    setMotoristasInfratores(json.motoristas);
-                    setInfracaoMensal(json.mensal);
+
+                    console.log(json);
+
+                    const placasInfratoras = json && json.placas.length ? json.placas : [{ placa: 'N/A', infracoes: 0 }];
+                    const motoristasInfratores = json && json.motoristas.length ? json.motoristas : [{ id: 'N/A', infracoes: 0 }];
+                    const infratoresMensal = json && json.mensal.length ? json.mensal : [{ id: 'N/A', infracoes: 0 }];
+
+                    setPlacasInfratoras(placasInfratoras);
+                    setMotoristasInfratores(motoristasInfratores);
+                    setInfracaoMensal(infratoresMensal);
                     setDadosMapa(json.mapa);
                     setQuantidadeInfracoes(json.total);
                     setTempoInfracoes(json.duracao);
@@ -64,7 +70,7 @@ function TelemetriaInfracoes() {
         <section className='animeLeft'>
             <div className={styles.containerTitulo}>
                 <h1 className={styles.titulo}>{arrayTelemetria[posArray].titulo}   {arrayTelemetria[posArray].icone}</h1>
-                <span className={styles.label}>Infrações: <span> {quantidadeInfracoes && !loading ? quantidadeInfracoes : <LoadingSpinner />} </span></span>
+                <span className={styles.label}>Infrações: <span> {(quantidadeInfracoes !== null) && !loading ? quantidadeInfracoes : <LoadingSpinner />} </span></span>
                 <span className={styles.label}>Tempo Total: <span> {tempoInfracoes && !loading ? tempoInfracoes : <LoadingSpinner />} </span> </span>
                 <div className={styles.containerBtns}>
                     {arrayTelemetria.map((arr, index) => (

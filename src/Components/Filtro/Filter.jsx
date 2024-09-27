@@ -10,17 +10,28 @@ const Filter = () => {
     const { pathname } = useLocation();
     const contextFilter = useContext(FilterContext);
     const {
-        anos, setAnos,
-        placas, setPlacas,
-        meses, setMeses,
-        filial, setFilial,
-        tipoVeiculo, setTipoVeiculo,
-        departamento, setDepartamento,
-        base, setBase,
-        categoria, setCategoria,
-        combustivel, setCombustivel,
-        url, fetchData
+        anos,
+        setAnos,
+        placas,
+        setPlacas,
+        meses,
+        setMeses,
+        filial,
+        setFilial,
+        tipoVeiculo,
+        setTipoVeiculo,
+        departamento,
+        setDepartamento,
+        base,
+        setBase,
+        categoria,
+        setCategoria,
+        combustivel,
+        setCombustivel,
+        url,
+        fetchData
     } = contextFilter;
+
 
     const [placaList, setPlacaList] = useState(null);
     const [filiaisList, setFiliaisList] = useState(null);
@@ -32,8 +43,6 @@ const Filter = () => {
     const [categoriaList, setCategoriaList] = useState(null);
     const [combustivelList, setCombustivelList] = useState(null);
 
-
-
     // Função Genérica para setar o que ira no fetch.
     const handleFilterChange = (setFunction) => (selectedOptions) => {
         const values = selectedOptions.map(option => option.value);
@@ -43,10 +52,10 @@ const Filter = () => {
     // Desabilitar o filtro em páginas que não precisam
     useEffect(() => {
         if (
-            pathname.includes('abastecimento/coleta')
-            || pathname.includes('abastecimento/media')
-            || pathname.includes('abastecimento/comparativo')
-            || pathname.includes('abastecimento/premio')
+            pathname.includes('coleta')
+            || pathname.includes('media')
+            || pathname.includes('comparativo')
+            || pathname.includes('premio')
         ) {
             setIsHidden(true);
         } else {
@@ -86,8 +95,6 @@ const Filter = () => {
 
 
 
-
-
                 setPlacaList(placasJson);
                 setFiliaisList(filiaisJson);
                 setAnosList(anosJson);
@@ -115,7 +122,8 @@ const Filter = () => {
         departamento,
         base,
         categoria,
-        combustivel, url
+        combustivel,
+        url
     ]);
 
 

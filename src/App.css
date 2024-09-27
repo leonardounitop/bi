@@ -3,6 +3,7 @@
   padding: 1rem;
   background-color: #f8fafc;
   min-height: calc(100vh - 2rem);
+  overflow: hidden;
 }
 
 li {
@@ -52,7 +53,7 @@ ul {
 .card {
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
   border-radius: 4px;
-  max-width: 350px;
+  /* max-width: 350px; */
   border-left: 6px solid #1e3a8a;
   padding: 1rem;
   position: relative;

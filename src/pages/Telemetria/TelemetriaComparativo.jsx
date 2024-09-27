@@ -1,132 +1,291 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import styles from './TelemetriaComparativo.module.css';
 import FiltroIndividual from '../../Components/Filtro/FiltroIndividual';
 import { IoIosGitCompare } from "react-icons/io";
+import { FilterTelemetriaContext } from '../../Context/FilterTelemetriaProvider';
+import { decimalFormatter } from '../../Helper/NumberFormatter'
 
+// Função Genérica para setar o que ira no fetch.
+const handleFilterChange = (setFunction) => (selectedOptions) => {
+    const values = selectedOptions.map(option => option.value);
+    setFunction(values.length > 0 ? values : null);
+};
 
 const camposComparativo = [
     {
         nome: 'Faixa Econômica',
         cor: '#15803d',
         id: 'economica',
-        isBetter: 'high'
+        type: '%',
+        isBetter: true
     },
     {
         nome: 'Faixa Potência',
         cor: '#ca8a04',
         id: 'potencia',
-        isBetter: 'lower'
+        type: '%',
+        isBetter: false
     },
     {
         nome: 'Alta Rotação',
         cor: '#991b1b',
-        id: 'altaRotacao',
-        isBetter: 'lower'
+        id: 'altarotacao',
+        type: '%',
+        isBetter: false
     },
     {
         nome: 'Marcha Lenta',
         cor: '#075985',
-        id: 'marchaLenta',
-        isBetter: 'lower'
+        id: 'marchalenta',
+        type: '%',
+        isBetter: false
     },
     {
         nome: 'Excesso Seco',
         cor: '#713f12',
-        id: 'excessoSeco',
-        isBetter: 'lower'
+        id: 'excessoseco',
+        type: '',
+        isBetter: false
     },
     {
         nome: 'Excesso Chuva',
         cor: '#172554',
-        id: 'excessoChuva',
-        isBetter: 'lower'
+        id: 'excessochuva',
+        type: '',
+        isBetter: false
 
     },
     {
         nome: 'Arrancada Brusca',
         cor: '#334155',
-        id: 'arrancadaBrusca',
-        isBetter: 'lower'
+        id: 'arrancadabrusca',
+        type: '',
+        isBetter: false
 
+    },
+    {
+        nome: 'Freada Brusca',
+        cor: '#224144',
+        id: 'freadabrusca',
+        type: '',
+        isBetter: false
     },
     {
         nome: 'Parado Ligado',
         cor: "#4c1d95",
-        id: 'paradoLigado',
-        isBetter: 'lower'
+        id: 'paradoligado',
+        type: '',
+
+        isBetter: false
 
     }, {
         nome: 'Produtividade',
         cor: "#134e4a",
         id: 'produtividade',
-        isBetter: 'high'
+        type: '%',
+        isBetter: true
 
     },
     {
-        nome: 'Km/mês',
+        nome: 'KM',
         cor: "#4b5563",
-        id: 'kmMes',
-        isBetter: 'high'
+        id: 'km',
+        type: '',
+        isBetter: true
 
     },
     {
-        nome: 'Km/dia',
-        cor: "#57534e",
-        id: 'kmDia',
-        isBetter: 'high'
-    },
-    {
-        nome: 'média',
+        nome: 'Média',
         cor: "#1a2e05",
         id: 'media',
-        isBetter: 'high'
+        type: 'km/l',
+        isBetter: true
     },
 
 ];
 
 function TelemetriaComparativo() {
 
-    const [comparativo, setComparativo] = useState({
-        leftData: {
-            economica: null,
-            potencia: null,
-            altaRotacao: null,
-            marchaLenta: null,
-            excessoSeco: null,
-            excessoChuva: null,
-            arrancadaBrusca: null,
-            paradoLigado: null,
-            produtividade: null,
-            kmMes: null,
-            kmDia: null,
-            media: null
-        },
-        rightData: {
-            economica: null,
-            potencia: null,
-            altaRotacao: null,
-            marchaLenta: null,
-            excessoSeco: null,
-            excessoChuva: null,
-            arrancadaBrusca: null,
-            paradoLigado: null,
-            produtividade: null,
-            kmMes: null,
-            kmDia: null,
-            media: null
-        }
+
+    const [leftData, setLeftData] = useState({
+        economica: null,
+        potencia: null,
+        altaRotacao: null,
+        marchalenta: null,
+        excessoseco: null,
+        excessochuva: null,
+        arrancadabrusca: null,
+        freadabrusca: null,
+        paradoligado: null,
+        produtividade: null,
+        km: null,
+        media: null
+    })
+
+    const [rightData, setRightData] = useState({
+        economica: null,
+        potencia: null,
+        altaRotacao: null,
+        marchalenta: null,
+        excessoseco: null,
+        excessochuva: null,
+        arrancadabrusca: null,
+        freadabrusca: null,
+        paradoligado: null,
+        produtividade: null,
+        km: null,
+        media: null
     });
 
 
+    const [anos, setAnos] = useState(null);
+    const [meses, setMeses] = useState(null);
+    const [dias, setDias] = useState(null);
+    const [marcas, setMarcas] = useState(null);
+    const [placas, setPlacas] = useState(null);
+
+    const [ranos, setRAnos] = useState(null);
+    const [rmeses, setRMeses] = useState(null);
+    const [rdias, setRDias] = useState(null);
+    const [rmarcas, setRMarcas] = useState(null);
+    const [rplacas, setRPlacas] = useState(null);
+
+    const [leftAnosList, setLeftAnosList] = useState(null);
+    const [leftMesesList, setLeftMesesList] = useState(null);
+    const [leftDiasList, setLeftDiasList] = useState(null);
+
+    const [leftMarcasList, setLeftMarcasList] = useState(null);
+    const [leftPlacasList, setLeftPlacasList] = useState(null);
+
+    const [leftLoading, setLeftLoading] = useState(null);
+
+
+    const [rightAnosList, setRightAnosList] = useState(null);
+    const [rightMesesList, setRightMesesList] = useState(null);
+    const [rightDiasList, setRightDiasList] = useState(null);
+
+    const [rightMarcasList, setRightMarcasList] = useState(null);
+    const [rightPlacasList, setRightPlacasList] = useState(null);
+
+    const [rightLoading, setRightLoading] = useState(null);
+
+
+    const {
+        url,
+        fetchData
+    } = useContext(FilterTelemetriaContext);
+
+    // Popular os filtros
     useEffect(() => {
 
-        async function fetchComparativoData() {
+        async function fetchPopularFiltros() {
+            try {
+                setLeftLoading(true);
 
-        };
+                const [
+                    placasJson,
+                    anosJson,
+                    mesesJson,
+                    diasJson,
+                    marcaJson
+                ] =
+                    await Promise.all([
+                        fetchData('obterPlacas', { anos, meses, dias, marcas }),
+                        fetchData('obterAnos', { placas, meses, dias, marcas }),
+                        fetchData('obterMeses', { anos, placas, dias, marcas }),
+                        fetchData('obterDias', { anos, placas, marcas, meses }),
+                        fetchData('obterMarca', { placas, anos, meses, dias }),
+                    ]);
+
+                setLeftPlacasList(placasJson);
+                setLeftAnosList(anosJson);
+                setLeftMesesList(mesesJson);
+                setLeftDiasList(diasJson);
+                setLeftMarcasList(marcaJson);
+
+            } catch (e) {
+                console.log(e);
+            } finally {
+                setLeftLoading(false);
+            }
+
+        }
+
+        if (url) fetchPopularFiltros();
+
+    }, [url, anos, meses, dias, marcas, placas]);
+
+    // filtros right
+    useEffect(() => {
+
+        async function fetchPopularFiltros() {
+            try {
+                setRightLoading(true);
+
+                const [
+                    placasJson,
+                    anosJson,
+                    mesesJson,
+                    diasJson,
+                    marcaJson
+                ] =
+                    await Promise.all([
+                        fetchData('obterPlacas', { anos: ranos, meses: rmeses, dias: rdias, marcas: rmarcas }),
+                        fetchData('obterAnos', { meses: rmeses, dias: rdias, marcas: rmarcas, placas: rplacas }),
+                        fetchData('obterMeses', { anos: ranos, dias: rdias, marcas: rmarcas, placas: rplacas }),
+                        fetchData('obterDias', { anos: ranos, meses: rmeses, marcas: rmarcas, placas: rplacas }),
+                        fetchData('obterMarca', { anos: ranos, meses: rmeses, dias: rdias, placas: rplacas }),
+                    ]);
+
+                setRightPlacasList(placasJson);
+                setRightAnosList(anosJson);
+                setRightMesesList(mesesJson);
+                setRightDiasList(diasJson);
+                setRightMarcasList(marcaJson);
+
+            } catch (e) {
+                console.log(e);
+            } finally {
+                setRightLoading(false);
+            }
+
+        }
+
+        if (url) fetchPopularFiltros();
+
+    }, [url, ranos, rmeses, rdias, rmarcas, rplacas]);
+
+    // Popular dados Esquerda
+    useEffect(() => {
+        async function fetchLeftData() {
+            const [jsonLeftData] = await Promise.all([fetchData('obterDadosComparativo', { anos, meses, dias, marcas, placas })]);
+
+            setLeftData({ ...leftData, ...jsonLeftData });
 
 
+        }
 
-    }, []);
+        if (url) fetchLeftData();
+    }, [url, anos, meses, dias, marcas, placas])
+
+
+    useEffect(() => {
+        async function fetchRightData() {
+
+            const [jsonRightData] = await Promise.all([fetchData('obterDadosComparativo', {
+                anos: ranos, meses: rmeses, dias: rdias,
+                marcas: rmarcas, placas: rplacas
+            })]);
+
+
+            console.log(jsonRightData);
+
+            setRightData({ ...rightData, ...jsonRightData });
+        }
+
+        if (url) fetchRightData();
+    }, [url, ranos, rmeses, rdias, rmarcas, rplacas])
+
 
     return (
         <section className='animeLeft'>
@@ -136,52 +295,50 @@ function TelemetriaComparativo() {
             <div className={styles.container}>
                 <div className={styles.containerFiltros}>
                     <div className={styles.containerData}>
-                        <FiltroIndividual placeholder="Ano" />
-                        <FiltroIndividual placeholder="Mês" />
-                        <FiltroIndividual placeholder="Dia" />
+                        <FiltroIndividual placeholder="Ano" isDisabled={!leftAnosList} options={leftAnosList} isLoading={leftLoading} onChange={handleFilterChange(setAnos)} />
+                        <FiltroIndividual placeholder="Mês" isDisabled={!leftMesesList} options={leftMesesList} isLoading={leftLoading} onChange={handleFilterChange(setMeses)} />
+                        <FiltroIndividual placeholder="Dia" isDisabled={!leftDiasList} options={leftDiasList} isLoading={leftLoading} onChange={handleFilterChange(setDias)} />
                     </div>
-                    <FiltroIndividual placeholder="Filial" />
-                    <FiltroIndividual placeholder="Marca" />
-                    <FiltroIndividual placeholder="Modelo" />
-                    <FiltroIndividual placeholder="Placa" />
+                    <FiltroIndividual placeholder="Marca" isDisabled={!leftMarcasList} options={leftMarcasList} isLoading={leftLoading} onChange={handleFilterChange(setMarcas)} />
+                    <FiltroIndividual placeholder="Placa" isDisabled={!leftPlacasList} options={leftPlacasList} isLoading={leftLoading} onChange={handleFilterChange(setPlacas)} />
                 </div>
 
                 <div className={styles.containerComparativo}>
-                    {camposComparativo.map(({ nome, cor, id, isBetter }) => {
+                    {camposComparativo.map(({ nome, cor, id, isBetter, type }) => {
 
                         let colorLeft = '#000';
                         let colorRight = '#000';
 
+
+
                         // Aqui verifico qual dos dois tem a melhor performance.
-                        if (comparativo.leftData[id] !== comparativo.rightData[id]) {
-                            if (isBetter === 'high') {
-                                comparativo.leftData[id] > comparativo.rightData[id] ? colorLeft = 'green' : colorRight = 'green';
+                        if (leftData[id] !== rightData[id]) {
+                            if (isBetter) {
+                                +leftData[id] > +rightData[id] ? colorLeft = 'green' : colorRight = 'green';
                             } else {
-                                comparativo.leftData[id] < comparativo.rightData[id] ? colorLeft = 'green' : colorRight = 'green';
+                                +leftData[id] < +rightData[id] ? colorLeft = 'green' : colorRight = 'green';
                             }
                         }
 
-
-
                         return <div key={id}>
-                            <span style={{ color: colorLeft }}>{comparativo.leftData[id] ? comparativo.leftData[id] : 0}</span>
+                            <span style={{ color: colorLeft }}>{leftData[id] ? `${decimalFormatter.format(leftData[id])}${type}` : 0}</span>
                             <div style={{ backgroundColor: cor ? cor : '#000' }}>{nome}</div>
-                            <span style={{ color: colorRight }}>{comparativo.rightData[id] ? comparativo.rightData[id] : 0}</span>
+                            <span style={{ color: colorRight }}>{rightData[id] ? `${decimalFormatter.format(rightData[id])}${type}` : 0}</span>
                         </div>
                     })}
                 </div>
                 <div className={styles.containerFiltros}>
                     <div className={styles.containerData}>
-                        <FiltroIndividual placeholder="Ano" />
-                        <FiltroIndividual placeholder="Mês" />
-                        <FiltroIndividual placeholder="Dia" />
+                        <FiltroIndividual placeholder="Ano" isDisabled={!rightAnosList} options={rightAnosList} isLoading={rightLoading} onChange={handleFilterChange(setRAnos)} />
+                        <FiltroIndividual placeholder="Mês" isDisabled={!rightMesesList} options={rightMesesList} isLoading={rightLoading} onChange={handleFilterChange(setRMeses)} />
+                        <FiltroIndividual placeholder="Dia" isDisabled={!rightDiasList} options={rightDiasList} isLoading={rightLoading} onChange={handleFilterChange(setRDias)} />
                     </div>
-                    <FiltroIndividual placeholder="Filial" />
-                    <FiltroIndividual placeholder="Marca" />
-                    <FiltroIndividual placeholder="Modelo" />
-                    <FiltroIndividual placeholder="Placa" />
+                    <FiltroIndividual placeholder="Marca" isDisabled={!rightMarcasList} options={rightMarcasList} isLoading={rightLoading} onChange={handleFilterChange(setRMarcas)} />
+                    <FiltroIndividual placeholder="Placa" isDisabled={!rightPlacasList} options={rightPlacasList} isLoading={rightLoading} onChange={handleFilterChange(setRPlacas)} />
                 </div>
             </div>
+
+
 
         </section>
     )
