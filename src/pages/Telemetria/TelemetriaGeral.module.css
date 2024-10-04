@@ -78,7 +78,7 @@
 .doubleContainer {
   display: grid;
   gap: 1rem;
-  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
 }
 
 .box {

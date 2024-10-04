@@ -22,6 +22,9 @@ import TelemetriaComparativo from './TelemetriaComparativo';
 
 
 function Telemetria() {
+
+
+
     return (
         <section className='container animeLeft'>
             <nav className='navigation'>

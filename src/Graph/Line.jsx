@@ -72,6 +72,8 @@ const Line = ({ data, dataType, legend, telemetria }) => {
                     return `${value}km/l`;
                 } else if (dataType === 'percent') {
                     return `${value}%`
+                } else if (dataType === 'km') {
+                    return `${value}km`
                 }
                 return value;
             }}

@@ -32,9 +32,11 @@ const convertToGeoJSON = (dados) => {
 
 const LeafletMap = ({ dados }) => {
     const mapRef = useRef(null);
+
     const markerClusterRef = useRef(L.markerClusterGroup({
         zoomToBoundsOnClick: true,
         chunkedLoading: true,
+        removeOutsideVisibleBounds: true, // Remove marcadores fora dos limites visíveis
     }));
 
     const dadosGeoJson = dados ? convertToGeoJSON(dados) : null;
@@ -45,33 +47,34 @@ const LeafletMap = ({ dados }) => {
         }
     }, [mapRef.current]);
 
+
     useEffect(() => {
         if (markerClusterRef.current) {
-            const markerClusterGroup = markerClusterRef.current;
-            markerClusterGroup.clearLayers(); // Limpa os marcadores existentes
+            markerClusterRef.current.clearLayers(); // Limpa os marcadores existentes
 
-            // Adiciona dados GeoJSON ao MarkerClusterGroup
-            const geoJsonLayer = L.geoJson(dadosGeoJson, {
-                onEachFeature: (feature, layer) => {
-                    layer.bindPopup(`
-                        Placa: ${feature.properties.placa}<br />
-                        Velocidade: ${feature.properties.velocidade ? feature.properties.velocidade : 0} km/h <br />
-                        Latitude: ${feature.geometry.coordinates[1]} <br />
-                        Longitude: ${feature.geometry.coordinates[0]} <br />
-                        Equipamento: ${feature.properties.tecnologia} <br />
-                        Duração: ${feature.properties.duracao ? feature.properties.duracao : '00:00:00'} <br />
-                        Data: ${feature.properties.dataposicao} <br />
-                        Evento: ${feature.properties.evento}
-                    `);
-                },
-                pointToLayer: (feature, latlng) => {
-                    return L.marker(latlng);
-                }
-            });
+            if (dadosGeoJson) {
+                const geoJsonLayer = L.geoJson(dadosGeoJson, {
+                    onEachFeature: (feature, layer) => {
+                        layer.bindPopup(`
+                            Placa: ${feature.properties.placa}<br />
+                            Velocidade: ${feature.properties.velocidade || 0} km/h <br />
+                            Latitude: ${feature.geometry.coordinates[1]} <br />
+                            Longitude: ${feature.geometry.coordinates[0]} <br />
+                            Equipamento: ${feature.properties.tecnologia} <br />
+                            Duração: ${feature.properties.duracao || '00:00:00'} <br />
+                            Data: ${feature.properties.dataposicao} <br />
+                            Evento: ${feature.properties.evento}
+                        `);
+                    },
+                    pointToLayer: (feature, latlng) => L.marker(latlng)
+                });
 
-            markerClusterGroup.addLayer(geoJsonLayer);
+                markerClusterRef.current.addLayer(geoJsonLayer);
+            }
         }
     }, [dadosGeoJson]);
+
+
 
     return (
         <div className="map-container">

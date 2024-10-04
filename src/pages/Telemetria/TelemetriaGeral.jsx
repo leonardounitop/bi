@@ -47,6 +47,10 @@ function TelemetriaGeral() {
     const [totalInfracoes, setTotalInfracoes] = useState(null);
     const [consumoMensalMarca, setConsumoMensalMarca] = useState(null);
 
+
+    const [kmMensal, setKmMensal] = useState(null);
+
+
     const [percent, setPercent] = useState(0); // Exemplo de valor de porcentagem (entre 0 e 1)
 
     const transformData = (data) => {
@@ -87,8 +91,8 @@ function TelemetriaGeral() {
                         jsonDadosMarca,
                         jsonDadosConsumoMarca,
                         jsonProdutividadeGeral,
-                        jsonTotalInfracoes,
-                        jsonConsumoMedioMensal
+                        jsonConsumoMedioMensal,
+                        jsonKmMensal
                     ] = await Promise.all([
                         fetchData('obterCardsEstatisticas', filterFetchs),
                         fetchData('obterDadosCards', filterFetchs),
@@ -96,8 +100,8 @@ function TelemetriaGeral() {
                         fetchData('obterDadosMarca', filterFetchs),
                         fetchData('obterDadosConsumoMarca', filterFetchs),
                         fetchData('obterDadosProdutividade', filterFetchs),
-                        fetchData('obterTotalInfracoes', filterFetchs),
                         fetchData('obterConsumoMedioMensal', filterFetchs),
+                        fetchData('obterDadosKmMensal', filterFetchs),
                     ]);
 
 
@@ -115,11 +119,17 @@ function TelemetriaGeral() {
                         setConsumoMarcas(jsonDadosConsumoMarca);
                     if (jsonProdutividadeGeral)
                         setPercent(jsonProdutividadeGeral.produtividade);
-                    if (jsonTotalInfracoes)
-                        setTotalInfracoes(jsonTotalInfracoes.length ? jsonTotalInfracoes : [{ value: 0, id: 'Nenhuma Infração' }]);
                     if (jsonConsumoMedioMensal) {
                         const consumoMensalTransformado = transformData(jsonConsumoMedioMensal);
                         setConsumoMensalMarca(consumoMensalTransformado);
+                    }
+
+
+                    if (jsonKmMensal) {
+                        const kmMensalTransform = transformData(jsonKmMensal);
+
+                        console.log(kmMensalTransform);
+                        setKmMensal(kmMensalTransform);
                     }
 
 
@@ -322,10 +332,11 @@ function TelemetriaGeral() {
 
 
                 <div className={styles.box} >
-                    {consumoMarcas ? <Pie
-                        data={consumoMarcas}
-                        dataType='volume'
-                    /> : <PieContentLoader />}
+
+                    {kmMensal ? <Line
+                        data={kmMensal}
+                        dataType='km'
+                    /> : <BarContentLoader />}
 
                 </div>
 

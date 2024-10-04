@@ -43,15 +43,10 @@ function TelemetriaInfracoes() {
 
                 if (json) {
 
-                    console.log(json);
 
-                    const placasInfratoras = json && json.placas.length ? json.placas : [{ placa: 'N/A', infracoes: 0 }];
-                    const motoristasInfratores = json && json.motoristas.length ? json.motoristas : [{ id: 'N/A', infracoes: 0 }];
-                    const infratoresMensal = json && json.mensal.length ? json.mensal : [{ id: 'N/A', infracoes: 0 }];
-
-                    setPlacasInfratoras(placasInfratoras);
-                    setMotoristasInfratores(motoristasInfratores);
-                    setInfracaoMensal(infratoresMensal);
+                    setPlacasInfratoras(json.placas);
+                    setMotoristasInfratores(json.motoristas);
+                    setInfracaoMensal(json.mensal);
                     setDadosMapa(json.mapa);
                     setQuantidadeInfracoes(json.total);
                     setTempoInfracoes(json.duracao);
