@@ -1,10 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { ptBR } from '@mui/x-data-grid/locales';
 import { currency, decimalFormatter } from '../../Helper/NumberFormatter'
 import { format } from 'date-fns';
 import { ptBR as br } from 'date-fns/locale';
 import { FilterContext } from '../../Context/FilterVault';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import styles from './Abastecimento.module.css';
 
 
@@ -12,17 +10,6 @@ import Modal from 'react-modal';
 import Table from '../../Components/Table/Table';
 import TableContentLoader from '../../Helper/Skeleton/TableContentLoader';
 
-
-
-
-const theme = createTheme(
-    {
-        palette: {
-            primary: { main: '#1976d2' },
-        },
-    },
-    ptBR,
-);
 
 const customStyles = {
     overlay: {
@@ -266,18 +253,16 @@ function AbastecimentoVeiculos() {
     return (
         <section className='animeLeft'>
 
-            <ThemeProvider theme={theme}>
-                <div className={styles.containerGrid} style={{ height: '75vh' }} >
-                    {veiculos && columns ?
-                        <Table
-                            rows={veiculos}
-                            columns={columns}
-                            onRowClick={openModal}
-                        />
+            <div className={styles.containerGrid} style={{ height: '75vh' }} >
+                {veiculos && columns ?
+                    <Table
+                        rows={veiculos}
+                        columns={columns}
+                        onRowClick={openModal}
+                    />
 
-                        : <TableContentLoader />}
-                </div>
-            </ThemeProvider>
+                    : <TableContentLoader />}
+            </div>
 
             <div id='modalGrid' >
                 {modalIsOpen && (
@@ -290,7 +275,7 @@ function AbastecimentoVeiculos() {
                         contentLabel="Lista de Abastecimentos"
                     >
 
-                        {rowsModal ? <ThemeProvider theme={theme}>
+                        {rowsModal ?
                             <div style={{ height: '90%', width: '100%' }}>
                                 <Table
                                     rows={rowsModal}
@@ -300,7 +285,7 @@ function AbastecimentoVeiculos() {
                                     <button onClick={closeModal}>Fechar</button>
                                 </div>
                             </div>
-                        </ThemeProvider> : <TableContentLoader />}
+                            : <TableContentLoader />}
                     </Modal>
                 )}
             </div>

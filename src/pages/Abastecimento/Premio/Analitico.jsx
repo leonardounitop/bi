@@ -1,8 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import styles from './Analitico.module.css';
 import Table from '../../../Components/Table/Table';
-import { ptBR } from '@mui/x-data-grid/locales';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { FilterContext } from '../../../Context/FilterVault';
 import TableContentLoader from '../../../Helper/Skeleton/TableContentLoader';
 import { decimalFormatter, currency } from '../../../Helper/NumberFormatter';
@@ -289,15 +287,6 @@ const columnsVariacao = [
 ]
 
 
-const theme = createTheme(
-    {
-        palette: {
-            primary: { main: '#1976d2' },
-        },
-    },
-    ptBR,
-);
-
 function Analitico() {
 
     const { url, fetchData } = useContext(FilterContext);
@@ -313,6 +302,7 @@ function Analitico() {
         async function fetchAnalitico() {
 
             const { primeiroSemestre, segundoSemestre, variacao, grafico } = await fetchData('obterDadosAnalitico');
+
 
 
             if (primeiroSemestre && segundoSemestre && variacao && grafico) {
@@ -344,36 +334,32 @@ function Analitico() {
             <div className={styles.containerDoubleTable}>
 
 
-                <ThemeProvider theme={theme}>
-                    <div className={styles.card}>
-                        <h2 className={styles.subtitulo}>Prêmio Superação - 1º Semestre</h2>
-                        <div className={styles.containerTable}>
-                            {dadosPrimeiroSemestre ? <Table
-                                rows={dadosPrimeiroSemestre}
-                                columns={columnsAnalitico}
-                                hideFooter={true}
+                <div className={styles.card}>
+                    <h2 className={styles.subtitulo}>Prêmio Superação - 1º Semestre</h2>
+                    <div className={styles.containerTable}>
+                        {dadosPrimeiroSemestre ? <Table
+                            rows={dadosPrimeiroSemestre}
+                            columns={columnsAnalitico}
+                            hideFooter={true}
 
-                            /> : <TableContentLoader />}
-                        </div>
+                        /> : <TableContentLoader />}
                     </div>
-                </ThemeProvider>
+                </div>
 
 
-                <ThemeProvider theme={theme}>
-                    <div >
-                        <h2 className={styles.subtitulo}>Prêmio Superação - 2º Semestre</h2>
+                <div >
+                    <h2 className={styles.subtitulo}>Prêmio Superação - 2º Semestre</h2>
 
 
-                        <div className={styles.containerTable}>
-                            {dadosSegundoSemestre ? <Table
-                                rows={dadosSegundoSemestre}
-                                columns={columnsAnalitico}
-                                hideFooter={true}
-                            /> : <TableContentLoader />}
-                        </div>
-
+                    <div className={styles.containerTable}>
+                        {dadosSegundoSemestre ? <Table
+                            rows={dadosSegundoSemestre}
+                            columns={columnsAnalitico}
+                            hideFooter={true}
+                        /> : <TableContentLoader />}
                     </div>
-                </ThemeProvider>
+
+                </div>
 
 
             </div>
@@ -381,16 +367,14 @@ function Analitico() {
             <h2 className={styles.subtitulo} style={{ marginTop: 16 }}>Variação Período</h2>
 
             <div className={styles.containerGraficoPrincipal}>
-                <ThemeProvider theme={theme}>
 
-                    <div className={styles.containerTable}>
-                        {dadosVariacao ? <Table
-                            rows={dadosVariacao}
-                            columns={columnsVariacao}
-                            hideFooter={true}
-                        /> : <TableContentLoader />}
-                    </div>
-                </ThemeProvider>
+                <div className={styles.containerTable}>
+                    {dadosVariacao ? <Table
+                        rows={dadosVariacao}
+                        columns={columnsVariacao}
+                        hideFooter={true}
+                    /> : <TableContentLoader />}
+                </div>
 
 
                 <div className={styles.graph}>

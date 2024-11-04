@@ -2,10 +2,6 @@ import React, { useContext, useEffect, useState } from 'react'
 import TableContentLoader from '../../Helper/Skeleton/TableContentLoader';
 import { MdOutlineOilBarrel } from "react-icons/md";
 
-
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { ptBR } from '@mui/x-data-grid/locales';
-
 import { FilterContext } from '../../Context/FilterVault'
 
 import { FaRoad } from "react-icons/fa";
@@ -17,14 +13,6 @@ import styles from './Abastecimento.module.css'
 import Table from '../../Components/Table/Table';
 
 
-const theme = createTheme(
-    {
-        palette: {
-            primary: { main: '#1976d2' },
-        },
-    },
-    ptBR,
-);
 
 
 function getMonthName(monthNumber) {
@@ -182,16 +170,14 @@ function AbastecimentoColetaEntrega() {
             <div className={styles.subtitleContainer}>
                 <h2 className={styles.subtitle}>Consumo Combustivel Km/L Filiais - Coleta | Entrega</h2>
             </div>
-            <ThemeProvider theme={theme}>
-                <div className={`${styles.containerGrid} `} style={{ height: '70vh' }} >
-                    {columns && data ?
-                        <Table rows={data}
-                            columns={columns}
-                            hideFooter={true}
-                        />
-                        : <TableContentLoader />}
-                </div>
-            </ThemeProvider>
+            <div className={`${styles.containerGrid} `} style={{ height: '70vh' }} >
+                {columns && data ?
+                    <Table rows={data}
+                        columns={columns}
+                        hideFooter={true}
+                    />
+                    : <TableContentLoader />}
+            </div>
 
 
 

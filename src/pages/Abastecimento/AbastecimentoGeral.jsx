@@ -80,6 +80,8 @@ function AbastecimentoGeral() {
                     ])
 
 
+
+
                     const lineData = transformData(jsonConsumoMedioFilial);
 
 

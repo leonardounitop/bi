@@ -1,8 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import styles from './Sintetico.module.css';
 import Table from '../../../Components/Table/Table';
-import { ptBR } from '@mui/x-data-grid/locales';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { FilterContext } from '../../../Context/FilterVault';
 import TableContentLoader from '../../../Helper/Skeleton/TableContentLoader';
 import { decimalFormatter, currency } from '../../../Helper/NumberFormatter'
@@ -85,14 +83,7 @@ const columnsMediaMaxima = [
 ]
 
 
-const theme = createTheme(
-    {
-        palette: {
-            primary: { main: '#1976d2' },
-        },
-    },
-    ptBR,
-);
+
 
 
 // obterDadosMedia
@@ -155,33 +146,29 @@ function Media() {
             <div className={styles.containerDoubleTable}>
 
 
-                <ThemeProvider theme={theme}>
-                    <div>
-                        <h2 className={styles.subtitulo}>2024 / 1 - CGR</h2>
-                        <div className={styles.containerTable}>
-                            {primeiroSemestreCGR ? <Table
-                                rows={primeiroSemestreCGR}
-                                columns={columnsMediaMaxima}
-                                hideFooter={true}
-                            /> : <TableContentLoader />}
-                        </div>
+                <div>
+                    <h2 className={styles.subtitulo}>2024 / 1 - CGR</h2>
+                    <div className={styles.containerTable}>
+                        {primeiroSemestreCGR ? <Table
+                            rows={primeiroSemestreCGR}
+                            columns={columnsMediaMaxima}
+                            hideFooter={true}
+                        /> : <TableContentLoader />}
                     </div>
-                </ThemeProvider>
+                </div>
 
 
-                <ThemeProvider theme={theme}>
-                    <div >
-                        <h2 className={styles.subtitulo}>2024 / 1 - CGB</h2>
+                <div >
+                    <h2 className={styles.subtitulo}>2024 / 1 - CGB</h2>
 
-                        <div className={styles.containerTable}>
-                            {primeiroSemestreMatriz ? <Table
-                                rows={primeiroSemestreMatriz}
-                                columns={columnsMediaMaxima}
-                                hideFooter={true}
-                            /> : <TableContentLoader />}
-                        </div>
+                    <div className={styles.containerTable}>
+                        {primeiroSemestreMatriz ? <Table
+                            rows={primeiroSemestreMatriz}
+                            columns={columnsMediaMaxima}
+                            hideFooter={true}
+                        /> : <TableContentLoader />}
                     </div>
-                </ThemeProvider>
+                </div>
 
 
             </div>
@@ -189,33 +176,29 @@ function Media() {
             <div className={styles.containerDoubleTable} style={{ marginTop: 16 }}>
 
 
-                <ThemeProvider theme={theme}>
-                    <div>
-                        <h2 className={styles.subtitulo}>2024 / 2 - CGR</h2>
-                        <div className={styles.containerTable}>
-                            {segundoSemestreCGR ? <Table
-                                rows={segundoSemestreCGR}
-                                columns={columnsMediaMaxima}
-                                hideFooter={true}
-                            /> : <TableContentLoader />}
-                        </div>
+                <div>
+                    <h2 className={styles.subtitulo}>2024 / 2 - CGR</h2>
+                    <div className={styles.containerTable}>
+                        {segundoSemestreCGR ? <Table
+                            rows={segundoSemestreCGR}
+                            columns={columnsMediaMaxima}
+                            hideFooter={true}
+                        /> : <TableContentLoader />}
                     </div>
-                </ThemeProvider>
+                </div>
 
 
-                <ThemeProvider theme={theme}>
-                    <div >
-                        <h2 className={styles.subtitulo}>2024 / 2 - CGB</h2>
+                <div >
+                    <h2 className={styles.subtitulo}>2024 / 2 - CGB</h2>
 
-                        <div className={styles.containerTable}>
-                            {segundoSemestreMatriz ? <Table
-                                rows={segundoSemestreMatriz}
-                                columns={columnsMediaMaxima}
-                                hideFooter={true}
-                            /> : <TableContentLoader />}
-                        </div>
+                    <div className={styles.containerTable}>
+                        {segundoSemestreMatriz ? <Table
+                            rows={segundoSemestreMatriz}
+                            columns={columnsMediaMaxima}
+                            hideFooter={true}
+                        /> : <TableContentLoader />}
                     </div>
-                </ThemeProvider>
+                </div>
 
 
             </div>

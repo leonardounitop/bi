@@ -46,7 +46,7 @@ const FilterVault = ({ children }) => {
         } else if (pathname.includes('telemetria')) {
             setUrl(API_URL_TELEMETRIA);
         } else {
-            setUrl(API_URL_ABASTECIMENTO);
+            setUrl(API_URL_TELEMETRIA);
         }
 
 

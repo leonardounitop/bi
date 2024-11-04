@@ -105,8 +105,6 @@ function TelemetriaGeral() {
                     ]);
 
 
-
-
                     if (jsonEstatisticas)
                         setDadosStats(jsonEstatisticas);
                     if (jsonCards)

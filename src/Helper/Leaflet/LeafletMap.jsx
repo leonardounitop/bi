@@ -6,6 +6,15 @@ import 'leaflet.markercluster/dist/MarkerCluster.css';
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
 import L from 'leaflet';
 import 'leaflet.markercluster';
+import caminhaoIcon from '../../assets/caminhaoGrande.png';
+
+// Definindo o ícone personalizado
+const customIcon = L.icon({
+    iconUrl: caminhaoIcon, // Caminho para o ícone personalizado
+    iconSize: [80, 80], // Tamanho do ícone
+    popupAnchor: [1, -34], // Ponto de ancoragem do popup em relação ao ícone
+    shadowSize: [41, 41] // Tamanho da sombra
+});
 
 const { BaseLayer } = LayersControl;
 
@@ -36,6 +45,7 @@ const LeafletMap = ({ dados }) => {
     const markerClusterRef = useRef(L.markerClusterGroup({
         zoomToBoundsOnClick: true,
         chunkedLoading: true,
+        chunkDelay: 50,
         removeOutsideVisibleBounds: true, // Remove marcadores fora dos limites visíveis
     }));
 
@@ -66,7 +76,7 @@ const LeafletMap = ({ dados }) => {
                             Evento: ${feature.properties.evento}
                         `);
                     },
-                    pointToLayer: (feature, latlng) => L.marker(latlng)
+                    pointToLayer: (feature, latlng) => L.marker(latlng, { icon: customIcon })
                 });
 
                 markerClusterRef.current.addLayer(geoJsonLayer);

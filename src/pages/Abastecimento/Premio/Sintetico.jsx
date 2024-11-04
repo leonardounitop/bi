@@ -1,8 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import styles from './Sintetico.module.css';
 import Table from '../../../Components/Table/Table';
-import { ptBR } from '@mui/x-data-grid/locales';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import BarContentLoader from '../../../Helper/Skeleton/BarContentLoader';
 import TableContentLoader from '../../../Helper/Skeleton/TableContentLoader';
 import { FilterContext } from '../../../Context/FilterVault';
@@ -90,14 +88,7 @@ const columnsSuperacao = [
 ]
 
 
-const theme = createTheme(
-    {
-        palette: {
-            primary: { main: '#1976d2' },
-        },
-    },
-    ptBR,
-);
+
 
 function Sintetico() {
 
@@ -117,7 +108,6 @@ function Sintetico() {
             const { agregado, cgr, matriz, grafico } = await fetchData('obterDadosSintetico');
 
 
-            console.log(grafico);
 
 
             if (agregado && cgr && matriz && grafico) {
@@ -354,7 +344,6 @@ function Sintetico() {
 
                 const dadosGraficoTratado = transformData(grafico);
 
-                console.log('Dados Tratados: ', dadosGraficoTratado)
 
                 setDadosAgregados(agregadosRows);
                 setDadosMatriz(matrizRows);
@@ -395,48 +384,36 @@ function Sintetico() {
                                 dataType='currency'
                             />
                             : <BarContentLoader />}
-
-
                     </div>
-
-
                 </div>
-
-
-
             </div>
-
 
             <div className={styles.containerDoubleTable}>
 
 
-                <ThemeProvider theme={theme}>
-                    <div>
-                        <h2 className={styles.subtitulo}>Prêmio Superação - CGB</h2>
-                        <div className={styles.containerTable}>
-                            {dadosMatriz ? <Table
-                                rows={dadosMatriz}
-                                columns={columnsSuperacao}
-                                hideFooter={true}
-                            /> : <TableContentLoader />}
-                        </div>
+                <div>
+                    <h2 className={styles.subtitulo}>Prêmio Superação - CGB</h2>
+                    <div className={styles.containerTable}>
+                        {dadosMatriz ? <Table
+                            rows={dadosMatriz}
+                            columns={columnsSuperacao}
+                            hideFooter={true}
+                        /> : <TableContentLoader />}
                     </div>
-                </ThemeProvider>
+                </div>
 
 
-                <ThemeProvider theme={theme}>
-                    <div >
-                        <h2 className={styles.subtitulo}>Prêmio Superação - CGR</h2>
+                <div >
+                    <h2 className={styles.subtitulo}>Prêmio Superação - CGR</h2>
 
-                        <div className={styles.containerTable}>
-                            {dadosCgr ? <Table
-                                rows={dadosCgr}
-                                columns={columnsSuperacao}
-                                hideFooter={true}
-                            /> : <TableContentLoader />}
-                        </div>
+                    <div className={styles.containerTable}>
+                        {dadosCgr ? <Table
+                            rows={dadosCgr}
+                            columns={columnsSuperacao}
+                            hideFooter={true}
+                        /> : <TableContentLoader />}
                     </div>
-                </ThemeProvider>
+                </div>
 
 
             </div>

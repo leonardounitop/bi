@@ -46,14 +46,14 @@ const Filter = () => {
     // Desabilitar o filtro em páginas que não precisam
     useEffect(() => {
         if (
-            pathname.includes('telemetria/infracoes')
+            pathname.includes('infracoes')
         ) {
             setConsultaPlacas('obterPlacasInfracoes');
         } else {
             setConsultaPlacas('obterPlacas');
         }
 
-        if (pathname.includes('telemetria/comparativo')) {
+        if (pathname.includes('comparativo') || pathname.includes('multas')) {
             setIsHidden(true);
         } else {
             setIsHidden(false);
@@ -82,6 +82,7 @@ const Filter = () => {
                         fetchData('obterAnos', { dias, placas, meses, marcas }),
                         fetchData('obterMarca', { dias, placas, meses, anos }),
                     ]);
+
 
 
                 setPlacaList(placasJson);

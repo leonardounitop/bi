@@ -50,11 +50,10 @@
 }
 
 .containerBar {
-  height: 320px;
+  height: 650px;
   max-width: 100%;
   box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
   border-radius: 4px;
-  width: 100%;
   background-color: #fff;
 }
 
@@ -68,7 +67,6 @@
   display: grid;
   gap: 1rem;
   grid-template-columns: 1fr 1fr;
-  margin-bottom: 1rem;
 }
 
 .label {
@@ -87,6 +85,19 @@
 
 .label span {
   color: #dc2626;
+}
+
+.placa {
+  padding: 0.2rem 0.4rem;
+  background: #1e3a8a;
+  color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+  border-radius: 0.2rem;
+}
+
+.botaoAcao {
+  padding: 0.2rem 0.5rem;
 }
 
 @media (max-width: 800px) {

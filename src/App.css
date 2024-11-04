@@ -245,8 +245,13 @@ ul {
   }
 }
 
+.container-cards.container-cards-multas {
+  grid-template-columns: repeat(4, 1fr);
+}
+
 @media (max-width: 700px) {
-  .container-cards {
+  .container-cards,
+  .container-cards.container-cards-multas {
     grid-template-columns: 1fr;
   }
 
@@ -326,4 +331,24 @@ ul {
 
 .select {
   min-width: 120px;
+}
+
+/* Css para os marcadores no mapa (teste) */
+
+.cluster-icon {
+  background-color: rgba(0, 123, 255, 0.6);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  color: white;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid white;
+}
+
+.cluster-marker {
+  margin: auto;
 }

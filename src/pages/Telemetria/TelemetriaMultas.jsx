@@ -5,11 +5,12 @@ import { GrMoney } from "react-icons/gr";
 import { IoAlertCircleOutline } from "react-icons/io5";
 import { IoNewspaperOutline } from "react-icons/io5";
 import LoadingSpinner from '../../Helper/LoadingSpinner';
+import { CiCircleAlert } from "react-icons/ci";
 
 
 
 import styles from './TelemetriaMultas.module.css';
-import { currency } from '../../Helper/NumberFormatter';
+import { currency, decimalFormatter } from '../../Helper/NumberFormatter';
 import Bar from '../../Graph/Bar';
 import Pie from '../../Graph/Pie';
 import BarContentLoader from '../../Helper/Skeleton/BarContentLoader';
@@ -29,13 +30,16 @@ function TelemetriaMultas() {
 
     const [numeroTotal, setNumeroTotal] = useState(null);
     const [valorTotal, setValorTotal] = useState(null);
-    const [valorTotalComDesconto, setValorTotalComDesconto] = useState(null);
-    const [descontoPerdido, setDescontoPerdido] = useState(null);
+    const [quantidadeNotificacoes, setQuantidadeNotificacoes] = useState(null);
+    const [valorAproximadoNotificacoes, setValorAproximadoNotificacoes] = useState(null);
 
 
-
+    // States para os graficos
     const [rankingMultas, setRankingMultas] = useState(null);
-    const [rankingValor, setRankingValor] = useState(null);
+    const [quantidadeMultas, setQuantidadeMultas] = useState(null);
+    const [quantidadePorLocal, setQuantidadePorLocal] = useState(null);
+    const [quantidadePorDescricao, setQuantidadePorDescricao] = useState(null);
+    const [quantidadePorOrgao, setQuantidadePorOrgao] = useState(null);
 
     useEffect(() => {
 
@@ -47,27 +51,33 @@ function TelemetriaMultas() {
 
                 const [
                     jsonCards,
-                    jsonRankingPlacas,
-                    jsonRankingValor,
+                    jsonDadosGraficos,
                 ] = await Promise.all([
                     fetchData('obterCardsMultas', filterFetchs),
-                    fetchData('obterRankingMultasPlacas', filterFetchs),
-                    fetchData('obterRankingMultasValor', filterFetchs),
+                    fetchData('obterDadosGraficosMultas', filterFetchs),
                 ]);
 
 
                 if (jsonCards) {
-                    setNumeroTotal(jsonCards.total);
-                    setValorTotal(jsonCards.valor_total);
-                    setValorTotalComDesconto(jsonCards.valor_com_desconto);
-                    setDescontoPerdido(jsonCards.desconto_perdido);
+                    setNumeroTotal(jsonCards[0].quantidade);
+                    setValorTotal(jsonCards[0].valor_total);
+                    setQuantidadeNotificacoes(jsonCards[1].quantidade);
+                    setValorAproximadoNotificacoes(jsonCards[1].valor_total);
                 }
 
-                if (jsonRankingPlacas)
-                    setRankingMultas(jsonRankingPlacas);
+                console.log(jsonDadosGraficos);
 
-                if (jsonRankingValor)
-                    setRankingValor(jsonRankingValor);
+                if (jsonDadosGraficos) {
+                    setRankingMultas(jsonDadosGraficos.valorPlacas);
+                    setQuantidadeMultas(jsonDadosGraficos.quantidadePlacas);
+                    setQuantidadePorLocal(jsonDadosGraficos.quantidadePorLocal);
+                    setQuantidadePorDescricao(jsonDadosGraficos.quantidadePorDescricao);
+                    setQuantidadePorOrgao(jsonDadosGraficos.quantidadePorOrgao);
+                }
+
+
+
+
 
             } catch (error) {
 
@@ -90,7 +100,7 @@ function TelemetriaMultas() {
     return (
         <section className=' animeLeft'>
 
-            <div className="container-cards">
+            <div className="container-cards container-cards-multas" >
                 <div className="card">
                     <h2>Nº Multas <IoNewspaperOutline /></h2>
                     <span className="card-value" >
@@ -99,20 +109,20 @@ function TelemetriaMultas() {
                 </div>
                 <div className="card">
                     <h2>Valor total <TbReportMoney /></h2>
-                    <span className="card-value" >
+                    <span className="card-value" style={{ color: '#dc2626' }} >
                         {valorTotal ? currency.format(valorTotal) : 0} {loading ? <LoadingSpinner /> : ''}
                     </span>
                 </div>
                 <div className="card">
-                    <h2>Valor com Desconto <GrMoney /> </h2>
+                    <h2>Nº Notificações <IoAlertCircleOutline /> </h2>
                     <span className="card-value">
-                        {valorTotalComDesconto ? currency.format(valorTotalComDesconto) : 0} {loading ? <LoadingSpinner /> : ''}
+                        {quantidadeNotificacoes ? quantidadeNotificacoes : 0} {loading ? <LoadingSpinner /> : ''}
                     </span>
                 </div>
                 <div className="card">
-                    <h2>desconto perdido <IoAlertCircleOutline /> </h2>
-                    <span className="card-value" style={{ color: '#dc2626' }}>
-                        {descontoPerdido ? currency.format(descontoPerdido) : 0} {loading ? <LoadingSpinner /> : ''}
+                    <h2>Valor Estimado Noti. <IoNewspaperOutline /> </h2>
+                    <span className="card-value" style={{ color: '#999' }}>
+                        {valorAproximadoNotificacoes ? currency.format(valorAproximadoNotificacoes) : 0} {loading ? <LoadingSpinner /> : ''}
                     </span>
                 </div>
 
@@ -122,7 +132,7 @@ function TelemetriaMultas() {
             <div className={styles.containerMultas}>
                 <div className={styles.containerGraph}>
 
-                    <div className={styles.doubleGraph}>
+                    <div className={styles.tripleGraph}>
                         <div className={styles.box}>
                             {rankingMultas ? <Bar
                                 data={rankingMultas}
@@ -137,31 +147,42 @@ function TelemetriaMultas() {
                         </div>
 
                         <div className={styles.box}>
-                            {rankingMultas ? <Pie
-                                data={rankingMultas}
-                                dataType='currency'
+                            {quantidadeMultas ? <Bar
+                                data={quantidadeMultas}
+                                keys={['quantidade']}
+                                layout='horizontal'
+                                indexBy="placa"
+                                margin={{ top: 10, right: 10, bottom: 0, left: 80 }}
+
                             /> : <BarContentLoader />}
+                        </div>
+
+                        <div className={styles.box}>
+
+                            {quantidadePorOrgao ? <Pie
+                                data={quantidadePorOrgao}
+                                margin={{ top: 40, right: 40, bottom: 40, left: 40 }}
+
+                            /> : <BarContentLoader />}
+
                         </div>
                     </div>
 
 
                     <div className={styles.doubleGraph}>
                         <div className={styles.box}>
-                            {rankingValor ? <Bar
-                                data={rankingValor}
-                                layout='horizontal'
-                                keys={['valor_total']}
-                                dataType='currency'
-                                customBarWidth={true}
-                                indexBy="codigo_infracao"
-                                margin={{ top: 10, right: 10, bottom: 0, left: 80 }}
+                            {quantidadePorDescricao ? <Pie
+                                data={quantidadePorDescricao}
+                                margin={{ top: 60, right: 40, bottom: 60, left: 150 }}
                             /> : <BarContentLoader />}
                         </div>
 
                         <div className={styles.box}>
-                            {rankingValor ? <Pie
-                                data={rankingValor}
-                                dataType='currency'
+                            {quantidadePorLocal ? <Pie
+                                data={quantidadePorLocal}
+                                margin={{ top: 60, right: 60, bottom: 60, left: 60 }}
+
+                            // dataType='currency'
                             /> : <BarContentLoader />}
                         </div>
                     </div>
@@ -169,7 +190,6 @@ function TelemetriaMultas() {
 
                 </div>
 
-                {/* <LeafletMap /> */}
 
             </div>
 

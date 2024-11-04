@@ -10,7 +10,10 @@ import { FilterTelemetriaContext } from '../../Context/FilterTelemetriaProvider'
 import Bar from '../../Graph/Bar';
 import LeafletMap from '../../Helper/Leaflet/LeafletMap';
 import LoadingSpinner from '../../Helper/LoadingSpinner'
-
+import Table from '../../Components/Table/Table';
+import TableContentLoader from '../../Helper/Skeleton/TableContentLoader';
+import { decimalFormatter } from '../../Helper/NumberFormatter';
+import { Button } from '@mui/material';
 
 const arrayTelemetria = [
     { titulo: 'Excesso Pista Seca', icone: <FaRoad />, consulta: 'obterInfratoresSeco', btn: 'Seco' },
@@ -19,6 +22,8 @@ const arrayTelemetria = [
     { titulo: 'Aceleração Brusca', icone: <IoIosSpeedometer />, consulta: 'obterInfratoresAceleracao', btn: 'Aceleração' },
     { titulo: 'Parado Ligado', icone: <FaClock />, consulta: 'obterInfratoresParado', btn: 'Parado Ligado' }
 ];
+
+
 
 function TelemetriaInfracoes() {
     const dadosFilter = useContext(FilterTelemetriaContext);
@@ -33,6 +38,78 @@ function TelemetriaInfracoes() {
     const [quantidadeInfracoes, setQuantidadeInfracoes] = useState(null);
     const [tempoInfracoes, setTempoInfracoes] = useState(null);
 
+
+    async function handleFechMapData({ placa, evento }) {
+
+
+
+
+        const json = await fetchData('obterDadosMapaInfracoes', { ...filterFetchs, placas: [placa], evento: [evento] });
+
+        setDadosMapa(json);
+
+    }
+
+    const columns = [
+
+        {
+            field: 'placa',
+            headerName: 'Placa',
+            width: 150,
+            renderCell: ({ row }) => (
+                <div className={styles.containerPlaca}>
+                    <span className={styles.placa}>
+                        {row.placa}
+                    </span>
+                </div>
+            ),
+        },
+        { field: 'evento', headerName: 'Evento', flex: 1 },
+        {
+            field: 'quantidade', headerName: 'Quantidade', type: 'number', flex: 1, renderCell: ({ row }) => (
+                <div>
+                    <span style={{ color: 'red' }}>
+                        {`${decimalFormatter.format(+row.quantidade)}`}
+                    </span>
+                </div>
+            ),
+        },
+        {
+            field: 'duracao', headerName: 'Duracao', flex: 1, valueGetter: (row) => {
+                // Verifica se a propriedade `duracao` está definida
+                if (!row) return 0;
+                // Converte a string de duração para segundos
+                const [hours = 0, minutes = 0, seconds = 0] = row.split(':').map(Number);
+                return hours * 3600 + minutes * 60 + seconds;
+            }, renderCell: ({ row }) => {
+
+
+                return <div>
+                    <span style={{ color: '#a16207' }}>
+                        {`${row.duracao}`}
+                    </span>
+                </div>
+            },
+        },
+        {
+            field: 'actions',
+            headerName: 'Mapa',
+            flex: 1,
+            renderCell: ({ row }) => (
+                <Button
+                    variant="outlined"
+                    color='info'
+                    size='small'
+                    onClick={() => handleFechMapData(row)}
+                >
+                    Mostrar Infrações
+                </Button>
+            ),
+        },
+
+    ];
+
+
     useEffect(() => {
         async function fetchDados() {
             try {
@@ -40,14 +117,8 @@ function TelemetriaInfracoes() {
                 const consulta = arrayTelemetria[posArray].consulta;
                 const json = await fetchData(consulta, filterFetchs);
 
-
                 if (json) {
-
-
                     setPlacasInfratoras(json.placas);
-                    setMotoristasInfratores(json.motoristas);
-                    setInfracaoMensal(json.mensal);
-                    setDadosMapa(json.mapa);
                     setQuantidadeInfracoes(json.total);
                     setTempoInfracoes(json.duracao);
                 }
@@ -77,7 +148,10 @@ function TelemetriaInfracoes() {
                 </div>
             </div>
             <div className={styles.containerGraphs}>
-                <div>
+                <div style={{ minHeight: 650, maxHeight: 650 }}>
+                    {placasInfratoras && !loading ? <Table columns={columns} rows={placasInfratoras} /> : <TableContentLoader />}
+                </div>
+                {/* <div>
                     <div className={styles.containerDoubleGraphs}>
                         <div className={styles.containerBar}>
                             {placasInfratoras && !loading ?
@@ -90,7 +164,7 @@ function TelemetriaInfracoes() {
                     <div className={styles.containerBar}>
                         {infracaoMensal && !loading ? <Bar data={infracaoMensal} keys={['infracoes']} indexBy="mes" margin={{ top: 10, right: 10, bottom: 30, left: 50 }} /> : <BarContentLoader />}
                     </div>
-                </div>
+                </div> */}
                 <LeafletMap dados={dadosMapa} />
             </div>
         </section>

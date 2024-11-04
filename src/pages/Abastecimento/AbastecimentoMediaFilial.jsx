@@ -1,10 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
-
 import Table from '../../Components/Table/Table';
-
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import styles from './Abastecimento.module.css';
-import { ptBR } from '@mui/x-data-grid/locales';
 import TableContentLoader from '../../Helper/Skeleton/TableContentLoader';
 
 import { FaRoad } from "react-icons/fa";
@@ -16,14 +12,6 @@ import { FilterContext } from '../../Context/FilterVault';
 import { decimalFormatter } from '../../Helper/NumberFormatter';
 
 
-const theme = createTheme(
-    {
-        palette: {
-            primary: { main: '#1976d2' },
-        },
-    },
-    ptBR,
-);
 
 
 function getMonthName(monthNumber) {
@@ -168,32 +156,28 @@ function AbastecimentoMediaFilial() {
 
             <h2 className={styles.subtitle}>Média Diesel - Tráfego - {'Matriz'}</h2>
 
-            <ThemeProvider theme={theme}>
-                <div className={styles.containerGrid} >
-                    {dataMatriz ?
-                        <Table
-                            rows={dataMatriz}
-                            columns={columns}
-                            hideFooter={true}
-                            autoHeight={true}
-                        />
+            <div className={styles.containerGrid} >
+                {dataMatriz ?
+                    <Table
+                        rows={dataMatriz}
+                        columns={columns}
+                        hideFooter={true}
+                        autoHeight={true}
+                    />
 
-                        : <div style={{ height: 400 }}> <TableContentLoader /> </div>}
-                </div>
-            </ThemeProvider>
+                    : <div style={{ height: 400 }}> <TableContentLoader /> </div>}
+            </div>
             <h2 className={styles.subtitle} style={{ marginTop: '1rem' }} >Média Diesel - Tráfego - {'CGR'}</h2>
-            <ThemeProvider theme={theme}>
-                <div className={styles.containerGrid}  >
-                    {dataCGR ?
-                        <Table
-                            rows={dataCGR}
-                            columns={columns}
-                            hideFooter={true}
-                            autoHeight={true}
-                        />
-                        : <div style={{ height: 400 }}> <TableContentLoader /> </div>}
-                </div>
-            </ThemeProvider>
+            <div className={styles.containerGrid}  >
+                {dataCGR ?
+                    <Table
+                        rows={dataCGR}
+                        columns={columns}
+                        hideFooter={true}
+                        autoHeight={true}
+                    />
+                    : <div style={{ height: 400 }}> <TableContentLoader /> </div>}
+            </div>
 
 
         </section>
