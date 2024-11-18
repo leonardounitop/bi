@@ -122,8 +122,6 @@ const Filter = () => {
                         <FiltroIndividual options={mesesList} isLoading={loading} isDisabled={!mesesList} onChange={handleFilterChange(setMeses)} placeholder="Mês" />
                         <FiltroIndividual options={diasList} isLoading={loading} isDisabled={!diasList} onChange={handleFilterChange(setDias)} placeholder="Dia" />
                     </div>
-
-
                 </form>
             </div>
         </section>

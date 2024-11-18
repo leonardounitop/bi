@@ -79,12 +79,7 @@ function AbastecimentoGeral() {
                         fetchData('obterMediaMensalFiliais', filterFetchs)
                     ])
 
-
-
-
                     const lineData = transformData(jsonConsumoMedioFilial);
-
-
 
                     if (jsonCards)
                         setCardInfo(jsonCards);

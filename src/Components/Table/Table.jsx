@@ -16,7 +16,7 @@ const theme = createTheme(
 // Lazy load do DataGrid
 const DataGrid = lazy(() => import('@mui/x-data-grid').then(module => ({ default: module.DataGrid })));
 
-function Table({ rows, columns, onRowClick, hideFooter = false, autoHeight = false }) {
+function Table({ rows, columns, onRowClick, hideFooter = false, autoHeight = false, loading }) {
     return (
         <Suspense fallback={<TableContentLoader />}>
             <ThemeProvider theme={theme}>
@@ -37,6 +37,7 @@ function Table({ rows, columns, onRowClick, hideFooter = false, autoHeight = fal
                             showQuickFilter: true,
                         },
                     }}
+                    loading={loading}
                     hideFooter={hideFooter}
                     autoHeight={autoHeight}
                 />

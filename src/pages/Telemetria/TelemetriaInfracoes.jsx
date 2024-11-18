@@ -24,31 +24,18 @@ const arrayTelemetria = [
 ];
 
 
-
 function TelemetriaInfracoes() {
     const dadosFilter = useContext(FilterTelemetriaContext);
     const { fetchData, filterFetchs, url } = dadosFilter;
 
     const [posArray, setPosArray] = useState(0);
     const [placasInfratoras, setPlacasInfratoras] = useState(null);
-    const [motoristasInfratores, setMotoristasInfratores] = useState(null);
-    const [infracaoMensal, setInfracaoMensal] = useState(null);
     const [dadosMapa, setDadosMapa] = useState(null);
     const [loading, setLoading] = useState(false);
     const [quantidadeInfracoes, setQuantidadeInfracoes] = useState(null);
     const [tempoInfracoes, setTempoInfracoes] = useState(null);
 
-
-    async function handleFechMapData({ placa, evento }) {
-
-
-
-
-        const json = await fetchData('obterDadosMapaInfracoes', { ...filterFetchs, placas: [placa], evento: [evento] });
-
-        setDadosMapa(json);
-
-    }
+    // const [loadingMapa, setLoadingMapa] = useState(false);
 
     const columns = [
 
@@ -100,6 +87,7 @@ function TelemetriaInfracoes() {
                     variant="outlined"
                     color='info'
                     size='small'
+                    disabled={loading}
                     onClick={() => handleFechMapData(row)}
                 >
                     Mostrar Infrações
@@ -108,6 +96,29 @@ function TelemetriaInfracoes() {
         },
 
     ];
+
+
+    async function handleFechMapData({ placa, evento }) {
+
+
+        setLoading(true);
+        try {
+
+            const json = await fetchData('obterDadosMapaInfracoes', { ...filterFetchs, placas: [placa], evento: [evento] });
+
+            if (Array.isArray(json)) {
+                setDadosMapa(json);
+            }
+
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setLoading(false);
+        }
+
+
+
+    }
 
 
     useEffect(() => {
@@ -149,22 +160,8 @@ function TelemetriaInfracoes() {
             </div>
             <div className={styles.containerGraphs}>
                 <div style={{ minHeight: 650, maxHeight: 650 }}>
-                    {placasInfratoras && !loading ? <Table columns={columns} rows={placasInfratoras} /> : <TableContentLoader />}
+                    {placasInfratoras ? <Table columns={columns} rows={placasInfratoras} loading={loading} /> : <TableContentLoader />}
                 </div>
-                {/* <div>
-                    <div className={styles.containerDoubleGraphs}>
-                        <div className={styles.containerBar}>
-                            {placasInfratoras && !loading ?
-                                <Bar data={placasInfratoras} layout='horizontal' keys={['infracoes']} customBarWidth={true} indexBy="placa" margin={{ top: 10, right: 10, bottom: 0, left: 80 }} /> : <BarContentLoader />}
-                        </div>
-                        <div className={styles.containerBar}>
-                            {motoristasInfratores && !loading ? <Bar data={motoristasInfratores} layout='horizontal' keys={['infracoes']} customBarWidth={true} indexBy="motorista" margin={{ top: 10, right: 10, bottom: 0, left: 100 }} /> : <BarContentLoader />}
-                        </div>
-                    </div>
-                    <div className={styles.containerBar}>
-                        {infracaoMensal && !loading ? <Bar data={infracaoMensal} keys={['infracoes']} indexBy="mes" margin={{ top: 10, right: 10, bottom: 30, left: 50 }} /> : <BarContentLoader />}
-                    </div>
-                </div> */}
                 <LeafletMap dados={dadosMapa} />
             </div>
         </section>

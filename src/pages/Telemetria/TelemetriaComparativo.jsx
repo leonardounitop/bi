@@ -278,8 +278,6 @@ function TelemetriaComparativo() {
             })]);
 
 
-            console.log(jsonRightData);
-
             setRightData({ ...rightData, ...jsonRightData });
         }
 
@@ -289,7 +287,6 @@ function TelemetriaComparativo() {
 
     return (
         <section className='animeLeft'>
-
             <h1 className={styles.titulo}>Comparativo <IoIosGitCompare /></h1>
 
             <div className={styles.container}>
@@ -309,9 +306,8 @@ function TelemetriaComparativo() {
                         let colorLeft = '#000';
                         let colorRight = '#000';
 
-
-
                         // Aqui verifico qual dos dois tem a melhor performance.
+
                         if (leftData[id] !== rightData[id]) {
                             if (isBetter) {
                                 +leftData[id] > +rightData[id] ? colorLeft = 'green' : colorRight = 'green';

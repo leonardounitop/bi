@@ -11,9 +11,9 @@ import caminhaoIcon from '../../assets/caminhaoGrande.png';
 // Definindo o ícone personalizado
 const customIcon = L.icon({
     iconUrl: caminhaoIcon, // Caminho para o ícone personalizado
-    iconSize: [80, 80], // Tamanho do ícone
-    popupAnchor: [1, -34], // Ponto de ancoragem do popup em relação ao ícone
-    shadowSize: [41, 41] // Tamanho da sombra
+    iconSize: [20, 100], // Tamanho do ícone
+    popupAnchor: [1, -44], // Ponto de ancoragem do popup em relação ao ícone
+    shadowSize: [20, 20] // Tamanho da sombra
 });
 
 const { BaseLayer } = LayersControl;
