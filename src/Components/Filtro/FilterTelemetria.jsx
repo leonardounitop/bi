@@ -18,7 +18,6 @@ const Filter = () => {
         meses,
         setMeses,
         filial,
-        setFilial,
         marcas,
         setMarcas,
         url,
@@ -32,11 +31,6 @@ const Filter = () => {
     const [diasList, setDiasList] = useState(null);
 
 
-
-
-    const [consultaPlacas, setConsultaPlacas] = useState('obterPlacas');
-
-
     // Função Genérica para setar o que ira no fetch.
     const handleFilterChange = (setFunction) => (selectedOptions) => {
         const values = selectedOptions.map(option => option.value);
@@ -45,13 +39,7 @@ const Filter = () => {
 
     // Desabilitar o filtro em páginas que não precisam
     useEffect(() => {
-        if (
-            pathname.includes('infracoes')
-        ) {
-            setConsultaPlacas('obterPlacasInfracoes');
-        } else {
-            setConsultaPlacas('obterPlacas');
-        }
+
 
         if (pathname.includes('comparativo') || pathname.includes('multas')) {
             setIsHidden(true);
@@ -76,7 +64,7 @@ const Filter = () => {
                     marcaJson
                 ] =
                     await Promise.all([
-                        fetchData(consultaPlacas, { anos, meses, dias, marcas }),
+                        fetchData('obterPlacas', { anos, meses, dias, marcas }),
                         fetchData('obterMeses', { anos, placas, dias, marcas }),
                         fetchData('obterDias', { anos, placas, meses, marcas }),
                         fetchData('obterAnos', { dias, placas, meses, marcas }),
@@ -106,7 +94,6 @@ const Filter = () => {
         filial,
         url,
         marcas,
-        consultaPlacas,
         dias
     ]);
 

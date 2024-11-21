@@ -35,8 +35,6 @@ function TelemetriaInfracoes() {
     const [quantidadeInfracoes, setQuantidadeInfracoes] = useState(null);
     const [tempoInfracoes, setTempoInfracoes] = useState(null);
 
-    // const [loadingMapa, setLoadingMapa] = useState(false);
-
     const columns = [
 
         {
@@ -82,6 +80,7 @@ function TelemetriaInfracoes() {
             field: 'actions',
             headerName: 'Mapa',
             flex: 1,
+            sortable: false,
             renderCell: ({ row }) => (
                 <Button
                     variant="outlined"

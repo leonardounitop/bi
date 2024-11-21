@@ -17,6 +17,7 @@ import { MdOutlineOilBarrel } from "react-icons/md";
 import { FaRoad } from "react-icons/fa";
 import { BsSpeedometer } from "react-icons/bs";
 import { RiTimerLine } from "react-icons/ri";
+import FilterTelemetria from '../../Components/Filtro/FilterTelemetria';
 
 
 
@@ -357,6 +358,7 @@ function TelemetriaGeral() {
 
 
         </section>
+
     )
 }
 

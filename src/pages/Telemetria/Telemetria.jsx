@@ -5,24 +5,19 @@ import FilterTelemetria from '../../Components/Filtro/FilterTelemetria';
 import FilterTelemetriaProvider from '../../Context/FilterTelemetriaProvider';
 
 import { GoGraph } from 'react-icons/go';
-import { MdOutlinePercent } from "react-icons/md";
-import { PiRanking, PiSecurityCamera } from "react-icons/pi";
+import { PiSecurityCamera } from "react-icons/pi";
 import { IoWarningOutline } from "react-icons/io5";
 import { BsGraphUpArrow } from "react-icons/bs";
-
-
-
 import { IoIosGitCompare } from "react-icons/io";
 import TelemetriaInfracoes from './TelemetriaInfracoes';
 import TelemetriaMultas from './TelemetriaMultas';
-// import TelemetriaRanking from './TelemetriaRanking';
-import TelemetriaComparativo from './TelemetriaComparativo';
 
+import TelemetriaComparativo from './TelemetriaComparativo';
+import FilterMultasProvider from '../../Context/FilterMultasProvider';
+import FilterInfracoesProvider from '../../Context/FilterInfracoesProvider';
 
 
 function Telemetria() {
-
-
 
     return (
         <section className='container animeLeft'>
@@ -44,14 +39,16 @@ function Telemetria() {
                 </ul>
             </nav>
 
+
             <FilterTelemetriaProvider>
                 <Routes>
                     <Route path='' element={<TelemetriaGeral />} end />
-                    <Route path='infracoes' element={<TelemetriaInfracoes />} />
+                    <Route path='infracoes' element={<FilterInfracoesProvider><TelemetriaInfracoes /></FilterInfracoesProvider>} />
                     <Route path='comparativo' element={<TelemetriaComparativo />} />
-                    <Route path='multas' element={<TelemetriaMultas />} />
+                    <Route path='multas' element={<FilterMultasProvider><TelemetriaMultas /></FilterMultasProvider>} />
                 </Routes>
                 <FilterTelemetria />
+
             </FilterTelemetriaProvider>
 
 

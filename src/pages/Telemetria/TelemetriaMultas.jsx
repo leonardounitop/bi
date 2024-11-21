@@ -15,6 +15,8 @@ import Bar from '../../Graph/Bar';
 import Pie from '../../Graph/Pie';
 import BarContentLoader from '../../Helper/Skeleton/BarContentLoader';
 import LeafletMap from '../../Helper/Leaflet/LeafletMap';
+import FilterMultas from '../../Components/Filtro/FilterMultas';
+import { FilterMultasContext } from '../../Context/FilterMultasProvider';
 
 
 
@@ -24,8 +26,9 @@ function TelemetriaMultas() {
     const [loading, setLoading] = useState(false);
 
 
-    const dadosFilter = useContext(FilterTelemetriaContext);
-    const { fetchData, filterFetchs, url } = dadosFilter;
+    const { fetchData, url } = useContext(FilterTelemetriaContext);
+
+    const { placas, mes, ano } = useContext(FilterMultasContext);
 
 
     const [numeroTotal, setNumeroTotal] = useState(null);
@@ -49,23 +52,43 @@ function TelemetriaMultas() {
             try {
                 setLoading(true);
 
+
                 const [
                     jsonCards,
                     jsonDadosGraficos,
                 ] = await Promise.all([
-                    fetchData('obterCardsMultas', filterFetchs),
-                    fetchData('obterDadosGraficosMultas', filterFetchs),
+                    fetchData('obterCardsMultas', { placas, meses: mes, anos: ano }),
+                    fetchData('obterDadosGraficosMultas', { placas, meses: mes, anos: ano }),
                 ]);
 
 
-                if (jsonCards) {
-                    setNumeroTotal(jsonCards[0].quantidade);
-                    setValorTotal(jsonCards[0].valor_total);
-                    setQuantidadeNotificacoes(jsonCards[1].quantidade);
-                    setValorAproximadoNotificacoes(jsonCards[1].valor_total);
-                }
+                if (jsonCards && Array.isArray(jsonCards) && jsonCards.length) {
+                    if (jsonCards[0].tipo === 'Multa') {
+                        setNumeroTotal(jsonCards[0].quantidade);
+                        setValorTotal(jsonCards[0].valor_total);
 
-                console.log(jsonDadosGraficos);
+                        if (jsonCards[1]) {
+                            setQuantidadeNotificacoes(jsonCards[1].quantidade);
+                            setValorAproximadoNotificacoes(jsonCards[1].valor_total);
+                        } else {
+                            setQuantidadeNotificacoes(0);
+                            setValorAproximadoNotificacoes(0);
+                        }
+                    } else {
+                        setNumeroTotal(0);
+                        setValorTotal(0);
+                        setQuantidadeNotificacoes(jsonCards[0].quantidade);
+                        setValorAproximadoNotificacoes(jsonCards[0].valor_total);
+                    }
+
+
+
+                } else {
+                    setNumeroTotal(0);
+                    setValorTotal(0);
+                    setQuantidadeNotificacoes(0);
+                    setValorAproximadoNotificacoes(0);
+                }
 
                 if (jsonDadosGraficos) {
                     setRankingMultas(jsonDadosGraficos.valorPlacas);
@@ -74,9 +97,6 @@ function TelemetriaMultas() {
                     setQuantidadePorDescricao(jsonDadosGraficos.quantidadePorDescricao);
                     setQuantidadePorOrgao(jsonDadosGraficos.quantidadePorOrgao);
                 }
-
-
-
 
 
             } catch (error) {
@@ -94,7 +114,7 @@ function TelemetriaMultas() {
 
 
 
-    }, [url])
+    }, [url, placas, mes, ano])
 
 
     return (
@@ -193,7 +213,7 @@ function TelemetriaMultas() {
 
             </div>
 
-
+            <FilterMultas />
         </section>
     )
 }
