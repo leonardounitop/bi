@@ -11,8 +11,16 @@ const FilterInfracoesProvider = ({ children }) => {
     const [dia, setDia] = useState(null);
     const [loading, setLoading] = useState(false);
 
+    const filterFetchs = {
+        anos: ano,
+        meses: mes,
+        dias: dia,
+        placas,
+        marcas: marca,
+    };
+
     return (
-        <FilterInfracoesContext.Provider value={{ placas, setPlacas, mes, setMes, marca, setMarca, dia, setDia, ano, setAno, loading, setLoading }}>
+        <FilterInfracoesContext.Provider value={{ placas, setPlacas, mes, setMes, marca, setMarca, dia, setDia, ano, setAno, loading, setLoading, filterFetchs }}>
             {children}
         </FilterInfracoesContext.Provider>
     );

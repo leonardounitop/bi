@@ -15,6 +15,7 @@ import TelemetriaMultas from './TelemetriaMultas';
 import TelemetriaComparativo from './TelemetriaComparativo';
 import FilterMultasProvider from '../../Context/FilterMultasProvider';
 import FilterInfracoesProvider from '../../Context/FilterInfracoesProvider';
+import FilterInfracoes from '../../Components/Filtro/FilterInfracoex';
 
 
 function Telemetria() {
@@ -41,6 +42,7 @@ function Telemetria() {
 
 
             <FilterTelemetriaProvider>
+
                 <Routes>
                     <Route path='' element={<TelemetriaGeral />} end />
                     <Route path='infracoes' element={<FilterInfracoesProvider><TelemetriaInfracoes /></FilterInfracoesProvider>} />
@@ -50,9 +52,6 @@ function Telemetria() {
                 <FilterTelemetria />
 
             </FilterTelemetriaProvider>
-
-
-
 
         </section>
     )

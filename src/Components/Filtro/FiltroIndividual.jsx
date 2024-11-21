@@ -3,7 +3,7 @@ import Select from 'react-select';
 
 const FiltroIndividual = ({ options, isLoading, isDisabled, onChange, placeholder }) => {
     return (
-        <div>
+        <div >
             <Select
                 isDisabled={isDisabled || !options}
                 isMulti

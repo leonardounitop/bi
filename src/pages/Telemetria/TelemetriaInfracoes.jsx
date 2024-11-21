@@ -14,6 +14,9 @@ import Table from '../../Components/Table/Table';
 import TableContentLoader from '../../Helper/Skeleton/TableContentLoader';
 import { decimalFormatter } from '../../Helper/NumberFormatter';
 import { Button } from '@mui/material';
+import FilterInfracoes from '../../Components/Filtro/FilterInfracoex';
+import { FilterMultasContext } from '../../Context/FilterMultasProvider';
+import { FilterInfracoesContext } from '../../Context/FilterInfracoesProvider';
 
 const arrayTelemetria = [
     { titulo: 'Excesso Pista Seca', icone: <FaRoad />, consulta: 'obterInfratoresSeco', btn: 'Seco' },
@@ -26,7 +29,9 @@ const arrayTelemetria = [
 
 function TelemetriaInfracoes() {
     const dadosFilter = useContext(FilterTelemetriaContext);
-    const { fetchData, filterFetchs, url } = dadosFilter;
+    const { fetchData, url } = dadosFilter;
+
+    const { filterFetchs } = useContext(FilterInfracoesContext)
 
     const [posArray, setPosArray] = useState(0);
     const [placasInfratoras, setPlacasInfratoras] = useState(null);
@@ -143,27 +148,34 @@ function TelemetriaInfracoes() {
     }, [posArray, url, fetchData, filterFetchs]);
 
     return (
-        <section className='animeLeft'>
-            <div className={styles.containerTitulo}>
-                <h1 className={styles.titulo}>{arrayTelemetria[posArray].titulo}   {arrayTelemetria[posArray].icone}</h1>
-                <span className={styles.label}>Infrações: <span> {(quantidadeInfracoes !== null) && !loading ? quantidadeInfracoes : <LoadingSpinner />} </span></span>
-                <span className={styles.label}>Tempo Total: <span> {tempoInfracoes && !loading ? tempoInfracoes : <LoadingSpinner />} </span> </span>
-                <div className={styles.containerBtns}>
-                    {arrayTelemetria.map((arr, index) => (
-                        <button key={index} onClick={() => setPosArray(index)}
-                            style={{ backgroundColor: index === posArray ? '#4770e0' : '#1e3a8a' }}>
-                            {arr.btn} {arr.icone}
-                        </button>
-                    ))}
+        <>
+            <section className='animeLeft'>
+                <div className={styles.containerTitulo}>
+                    <h1 className={styles.titulo}>{arrayTelemetria[posArray].titulo}   {arrayTelemetria[posArray].icone}</h1>
+                    <span className={styles.label}>Infrações: <span> {(quantidadeInfracoes !== null) && !loading ? quantidadeInfracoes : <LoadingSpinner />} </span></span>
+                    <span className={styles.label}>Tempo Total: <span> {tempoInfracoes && !loading ? tempoInfracoes : <LoadingSpinner />} </span> </span>
+                    <div className={styles.containerBtns}>
+                        {arrayTelemetria.map((arr, index) => (
+                            <button key={index} onClick={() => setPosArray(index)}
+                                style={{ backgroundColor: index === posArray ? '#4770e0' : '#1e3a8a' }}>
+                                {arr.btn} {arr.icone}
+                            </button>
+                        ))}
+                    </div>
                 </div>
-            </div>
-            <div className={styles.containerGraphs}>
-                <div style={{ minHeight: 650, maxHeight: 650 }}>
-                    {placasInfratoras ? <Table columns={columns} rows={placasInfratoras} loading={loading} /> : <TableContentLoader />}
+                <div className={styles.containerGraphs}  >
+                    <div style={{ minHeight: 650, maxHeight: 650 }}>
+                        {placasInfratoras ? <Table columns={columns} rows={placasInfratoras} loading={loading} /> : <TableContentLoader />}
+                    </div>
+                    <LeafletMap dados={dadosMapa} />
+
                 </div>
-                <LeafletMap dados={dadosMapa} />
-            </div>
-        </section>
+
+            </section>
+            <FilterInfracoes />
+
+        </>
+
     );
 }
 

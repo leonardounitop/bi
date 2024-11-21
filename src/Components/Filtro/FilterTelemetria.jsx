@@ -37,11 +37,11 @@ const Filter = () => {
         setFunction(values.length > 0 ? values : null);
     };
 
-    // Desabilitar o filtro em páginas que não precisam
+    // Desabilitar o filtro em páginas que não precisam ou que possuem tabelas diferentes.
     useEffect(() => {
 
 
-        if (pathname.includes('comparativo') || pathname.includes('multas')) {
+        if (pathname.includes('comparativo') || pathname.includes('multas') || pathname.includes('infracoes')) {
             setIsHidden(true);
         } else {
             setIsHidden(false);
